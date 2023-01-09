@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	| Profile
+{% endblock %}
+
+
+
+{% block content %}
+<!-- <div class="container">
+    <div class="row row-flex">
+        <div class="col-md-12 col-flex-item" >
+            <h3 class=" mb-4">PROFILE</h3>
+            <table class="table" style="border: 2px solid black; height: 100px; background-color:  #fff;">
+                <tbody>
+                    <tr>
+                        <td class="text-center m-auto" colspan="2">
+                            <img src="media/{{ user.profile }}" rowspan="2" class="rounded-circle " height="150" alt="Avatar"
+                            loading="lazy" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center col-md-3 font-weight-bold"><label class="mr-5">First Name:</label><input type="text" class="col-md-9" value="{{ user.fname }}" readonly></td>
+                        <td class="col-md-9"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> -->
+
+<div class="card-body">
+    <div class="container p-5" style="background-color: #fff; border-radius: 10px;">
+        <div class="row col-md-12 ml-3">
+            <h2>Profile</h2>
+        </div>
+        <div class="row justify-content-center">
+            <!-- <h3>Profile</h3> -->
+            <div class="col-md-10 px-3">
+                <!-- PROFILE PICTURE -->
+                <div class="text-center mb-3">
+                    <img class="img-fluid rounded-circle my-4" src="media{{ user.profile }}"style="border: 3px solid #f09d37; margin: 0 auto; padding: 3px; width: 200px; height:200px;" alt="User profile picture">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 px-5">
+                <div class="form-group row mt-2 mb-3">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">First Name</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="FirstName" name="FirstName" value="{{ user.fname }}" disabled="">
+                    </div>
+                </div>
+                <div class="form-group row mt-2 mb-3">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">Last Name</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="FirstName" name="FirstName" value="{{ user.lname }}" disabled="">
+                    </div>
+                </div>
+                <div class="form-group row mt-2 mb-3">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">Username</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="FirstName" name="FirstName" value="{{ user.username }}" disabled="">
+                    </div>
+                </div>
+                <div class="form-group row mt-2 mb-3">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">Email Address</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="FirstName" name="FirstName" value="{{ user.email }}" disabled="">
+                    </div>
+                </div>
+                <div class="form-group row mt-2 mb-5">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">About Yourself</label>
+                    <div class="col-md-9">
+                        <!-- <input type="text" class="form-control" id="FirstName" name="FirstName" value="{{ user.email }}" disabled=""> -->
+                        <Textarea class="form-control" id="Bio" name="Bio" rows="5" disabled></Textarea>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class="mb-3">
+            <a href="{% url 'USusers:edit-profile' %}" class="btn btn-primary float-right ml-2 mr-4">Edit Profile</a>
+            <a href="/" class="btn btn-secondary float-right">Back</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

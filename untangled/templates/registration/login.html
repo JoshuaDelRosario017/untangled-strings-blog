@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	| Login
+{% endblock %}
+
+
+{% load static %}
+{% block content %}
+
+
+
+<!-- <div class="modal fade" id="ModalCenterRating"> -->
+	<div class="login-container container mb-5">
+		{% if messages %}
+            <ul class="messages col-md-6 m-auto">
+                {% for message in messages %}
+                <p {% if message.tags %} class="text-center alert {{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </ul>
+        {% endif %}
+		<div class="row mt-2 px-5">
+			<div class="login col-md-4 m-auto mb-5 border-secondary">
+				<div class="text-center mt-4 mb-4">
+					<h2 class="secondary-title"><i class="fa-solid fa-feather mr-3"></i>Login</h2>
+				</div>
+				{% if error_message %}
+					<p id="err_mess" class="alert alert-danger">
+						<strong>{{ error_message }}</strong>
+					</p>
+				{% endif %}
+				<form method="POST">
+					{% csrf_token %}
+					<div class="form-group">
+						
+						
+
+						<label class="names ">Username</label>
+						<input type="text" name="username" id="username" class="form-control mb-4 secondary-title" placeholder="Enter Username" autocomplete="off" required style="box-shadow: none !important;">
+
+						<label class="names ">Password</label>
+						<input type="password" name="password" id="password" class="form-control mb-4 secondary-title" placeholder="Enter Password">
+						<!-- <input type="checkbox" name="remember_me" id="remember_me" class="mb-4"> Remember Me -->
+
+						<p class="text-center mb-0 secondary-title"><a href="">Forgot your password?</a></p>
+						<p class="text-center secondary-title">Doesn't have account? <a href="{% url 'untangled:register' %}">Register</a></p>
+						
+					</div>
+
+					<button class="btn-log btn form-control mb-4" type="submit">Login</button>
+				</form>
+				<p class="text-center"><span>----- OR -----</span></p>
+				<a href="{% url 'social:begin' 'facebook' %}" class="btn-logfb btn form-control mb-3" type="submit"><i class="fa-brands fa-facebook-f mr-3"></i>Login with Facebook</a>
+				<!-- <bu	tton class="btn-logggl btn form-control mb-4" type="submit"><i class="fa-brands fa-google mr-3"></i>Login with Google</button> -->
+			</div>
+			<!-- end row -->
+		</div>
+		<!-- end container -->
+	</div>
+<!-- </div> -->
+
+{% endblock %}

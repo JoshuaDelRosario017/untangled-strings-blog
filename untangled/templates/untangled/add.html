@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	| New Post
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 col-flex-item">
+            <h3>Add New Post</h3>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <p {% if message.tags %} class="alert {{ message.tags }} text-center"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form method="post" id="form" action="">
+                {% csrf_token %} <!-- cross site request forgery-->
+                <div class="form-group mb-3 bg-light rounded" style="background-color: white; padding: 15px;">
+                    <div class="col-md-12 mb-5">
+                        <label>Blog Title: </label>
+                        <input type="text" name="title" id="fnametitle" autocomplete="off" class="text-center form-control" style="height: 60px; font-weight: bold;" required>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <label for="category">Blog Category: </label>
+                        <select class="form-select mb-3 col-md-6 category" id="categories" name="category" required>
+                            <option class="option" disabled selected>Select Category</option>
+                            {% for cat in categories %} 
+                                <option class="option" style="height: 500px !important" value="{{ cat.blog_categories }}">{{ cat.blog_categories }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if user.is_admin or user.is_staff %}
+                            <a href="{% url 'untangled:addCategory' %}" style="text-decoration: none" class="pages">Add Category</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <label>Blog Description:</label>
+                        <textarea name="description" id="description" rows="5" class="form-control" maxlength="2000" required></textarea>
+                        <div id="count" class="float-right">0 / 2000 Characters</div>
+                    </div>
+                    <div class="col-md-12">
+                        <!-- <label for="textarealabel">Body Composition</label>
+                        <textarea name="body" id="blog_body" rows="10" class="form-control"></textarea> -->
+                        {% if user.is_authenticated %}
+                            {{ form.media }}
+                            {{ form.as_p }}
+                        {% endif %}
+                    </div>
+                </div>
+                    <!-- <button type="submit" name="draft" class="btn btn-secondary  mr-2">Save as Draft</button>
+                    <button type="submit" name="preview" class="btn btn-primary">Preview</button> -->
+        </div>
+        <div class="col-md-3 col-flex-item mb-3">
+            <h3 class="create-title">Create</h3>
+            <ol class="rounded" style="padding: 15px; background-color: white; padding: 15px;" > 
+                <ul>
+                    <!-- <button type="submit" name="preview" class="btn btn-primary col-lg-12"><i class="fa-solid fa-eye mr-2"></i>Preview</button>
+                    <hr style="margin: 5px;"> -->
+                    <!-- <input type="button"> -->
+                    <button type="submit" name="publish" class="btn btn-success col-md-12 mb-2" onclick="addpostForm()"><i class="fa-solid fa-upload mr-2"></i>Publish</button>  
+                    <button type="submit" name="publish" class="btn btn-primary col-md-12 mb-2" onclick="addpostForm()"><i class="fa-solid fa-clock mr-2"></i>Scheduled Post</button>  
+                    <button type="submit" name="draft" class="btn btn-secondary col-md-12" onclick="savedraft()"><i class="fa-solid fa-floppy-disk mr-2"></i>Save as Draft</a>
+                    <!-- <hr style="margin: 5px;"> -->
+                </ul>
+            </ol>
+            </form>
+            <h3 id="work-pages-title">Work Pages</h3>
+            <ol class="rounded" style="padding: 15px; background-color: white; padding: 15px; " > 
+                <ul>
+                    <a href="{% url 'untangled:published' %}" style="text-decoration: none;" class="pages"><i class="fa-solid fa-upload mr-2"></i>Published Works</a>
+                    <hr style="margin: 5px;">
+                    <a href="{% url 'untangled:drafts' %}" style="text-decoration: none;" class="pages"><i class="fa-solid fa-file mr-2"></i>Drafts</a>
+                    <hr style="margin: 5px;">
+                    <a href="{% url 'untangled:deleted' %}" style="text-decoration: none;" class="pages"><i class="fa-solid fa-trash mr-2"></i>Deleted (Trash)</a>
+                </ul>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<script>
+    cover.onchange = evt => {
+    const [file] = cover.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+</script>
+
+<script>
+    document.getElementById('description').onkeyup = function () {
+        document.getElementById('count').innerHTML = (this.value.length + ' / 500 Characters');
+    };
+</script>
+
+<!-- modify action for form if published or draft -->
+<script>
+    function addpostForm() {
+        document.getElementById("form").action = "{% url 'untangled:processAddPost' %}";
+    }
+
+    function savedraft() {
+        document.getElementById("form").action = "{% url 'untangled:processDraftPost' %}";
+    }
+</script>
+{% endblock %}

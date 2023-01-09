@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	| Edit Profile
+{% endblock %}
+
+
+
+{% block content %}
+<div class="card-body">
+    <div class="container p-5" style="background-color: #fff; border-radius: 10px;">
+        <div class="row col-md-12 ">
+            <h2>Edit Profile</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 px-3">
+            <form action="{% url 'untangled:save' %}" method="POST">
+            {% csrf_token %}
+                <!-- PROFILE PICTURE -->
+                <div class="text-center">
+                    <img class="img-fluid rounded-circle my-4" id="profileDisplay" src="media{{ user.profile }}" style="border: 3px solid #f09d37; margin: 0 auto; padding: 3px; width: 200px; height:200px;"  loading="lazy"/>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-12 px-5 text-center">
+                <h6 class="font-weight-bold">Change Image</h6>
+                <h6 class="text-muted">You can upload a JPG, PNG or GIF file (File size limit is 3MB).<br> Recommended size 200x200.</h6>
+                <input type="file" onChange="displayImage(this)" id="profileImage" data-max-file-size="3M" data-allowed-file-extensions="jpeg png jpg" name="profile" hidden/>
+                <label for="profileImage" class="btn btn-sm btn-primary m-0"><i class="fas fa-upload"></i> Choose Image</label>
+                <a class="btn btn-sm btn-outline-secondary m-0">Remove</a>
+            </div>
+        </div>
+
+        <!-- Containers -->
+        <div class="row">
+            <div class="col-md-12 px-5">
+            
+                <div class="form-group row mt-2 mb-3">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">First Name</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="firstName" name="firstName" value="{{ user.fname }}">
+                    </div>
+                </div>
+                <div class="form-group row mt-2 mb-3">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">Last Name</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="lastName" name="lastName" value="{{ user.lname }}" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group row mt-2 mb-3">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">Username</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+                    </div>
+                </div>
+                <div class="form-group row mt-2 mb-3">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">Email Address</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="email" name="email" value="{{ user.email }}">
+                    </div>
+                </div>
+                <div class="form-group row mt-2 mb-5">
+                    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">About Yourself</label>
+                    <div class="col-md-9">
+                        <Textarea class="form-control" id="bio" name="bio" rows="5" maxlength="500"></Textarea>
+                        <div id="count" class="float-right">/ 500 Characters</div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary float-right ml-2 mr-4">Save Changes</button>
+            </form>
+            <a href="{% url 'untangled:profile' %}" class="btn btn-danger float-right">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('bio').onkeyup = function () {
+        document.getElementById('count').innerHTML = (this.value.length + ' / 500 Characters');
+    };
+</script>
+
+<script>
+    function displayImage(e) {
+        if (e.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e){
+                document.querySelector('#profileDisplay').setAttribute('src', e.target.result);
+            }
+            reader.readAsDataURL(e.files[0]);
+        }
+    }
+</script>
+
+{% endblock %}

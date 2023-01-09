@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	| Register
+{% endblock %}
+
+
+{% load static %}
+{% block content %}
+
+
+	
+	<div class="register-container container  mb-5 px-5">
+		<div class="row mt-2">
+			<div class="register col-md-5 m-auto border border-primary" style="background-color: ghostwhite;">
+				<div class="text-center mt-4 mb-4">
+					<h2 class="secondary-title"><i class="fa-solid fa-feather mr-3"></i>Register</h2>
+				</div>
+				{% if messages %}
+					<ul class="messages">
+						{% for message in messages %}
+						<p {% if message.tags %} class="text-center alert {{ message.tags }}"{% endif %}>{{ message }}</p>
+						{% endfor %}
+					</ul>
+            	{% endif %}
+				<form method="POST">
+                    <div class="form-group">
+                        <div class="ml-3 mb-5 mt-5 mr-4">
+							<p class="text-muted placeholder">Please input required information.</p>
+							{% csrf_token %}
+							{{ form }}
+						</div>
+                    
+					
+						<!-- <p class="text-muted placeholder">Please input required information.</p>
+						<label class="form-label required">First Name</label>
+						<input type="text" name="fname" id="fname" class="placeholder form-control mb-4" placeholder="Enter your first name" autocomplete="off" required>
+
+						<label class="form-label required">Last Name</label>
+						<input type="text" name="lname" id="lname" class="placeholder form-control mb-4" placeholder="Enter your last name" autocomplete="off" required>
+
+						<label class="form-label required">Email</label>
+						<input type="email" name="email" id="email" class="placeholder form-control mb-4" placeholder="Enter your email" required>
+
+						<label class="form-label required">Username</label>
+						<input type="text" name="username" id="username" class="placeholder form-control mb-4" placeholder="Enter username">
+
+						<label class="form-label required">Password</label>
+						<input type="password" name="password" id="password" class="placeholder form-control" placeholder="Enter password">
+						<small class="text-muted">
+							<div class="tooltip-wrap popover-test" style="cursor: pointer;">Password Requirements
+								<span class="tooltiptext">
+									<li>Must contain lower and uppercase letters.</li>
+									<li>Must contain number.</li>
+									<li>Atleast 8 characters long.</li>
+									<li>Your password can’t be too similar to your other personal information.</li>
+									<li>Your password must contain at least 8 characters.</li>
+									<li>Your password can’t be a commonly used password.</li>
+									<li>Your password can’t be entirely numeric.</li>
+								</span>
+							</div>
+						</small>
+						<br>
+
+						<label  class="form-label required mt-3">Confirm Password</label>
+						<input type="password" name="password1" id="password" class="placeholder form-control mb-4" placeholder="Confirm your password"> -->
+
+						<p class="text-center placeholder">Already have an account? <a href="{% url 'login' %}">Login</a>.</p>
+
+					</div>
+
+					<button class="btn-log btn form-control mb-4" type="submit">Register</button>
+
+
+				</form>
+
+			</div>
+			<!-- end row -->
+		</div>
+		<!-- end container -->
+	</div>
+
+{% endblock %}

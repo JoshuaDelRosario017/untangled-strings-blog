@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	 | {{ blogs.blog_title }}
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <div class="row" >
+        <div class="col-md-8 mb-3 px-4 rounded col-flex-item" style="background-color: #fff;">
+            <h1 class="blog-title mt-4 font-weight-bold text-center">{{ blogs.blog_title }}</h1>
+            
+            <div class="text-muted mt-3 text-center">
+                <div class="mb-1">By: <a href="#">{{ blogs.blog_author }}</a> &#x2022 Posted on: {{ blogs.blog_pubdate }}</div>
+                
+            </div> 
+            <div class="separator"></div>
+            <div class="blog-desc-body px-3 py-3 mb-3 rounded">
+                <div class="mb-4">
+                    {{ blogs.blog_description }}
+                </div>
+                <div>
+                    {{ blogs.blog_body|safe }}
+                </div>
+            </div>
+            <hr>
+                <div class="mb-3">
+                    Category: <small class="bg-dark text-light p-1 rounded">{{ blogs.blog_category }}</small>
+                </div>
+        </div>
+        <div class="col-md-4 mb-3" >
+            <div class="mb-3 rounded post-details" style="background-color: #fff;">
+                <div class="row m-auto text-center p-4">
+                    <div class="col-md-12 col-flex-item">
+                        <img class="img-fluid rounded-circle " src="media{{ user.profile }}"style="width: 60px; height:60px;" onerror="this.src='/media/profile_pics/default_pfp.jpeg';this.onerror='';">
+                    </div>
+                    <div class="col-md-12 col-flex-item">
+                        <small>By <strong><a href="#">{{ blogs.blog_author }}</a></strong></small>
+                    </div>
+                    <div class="col-md-12 col-flex-item">
+                        <small>Posted on: {{ blogs.blog_pubdate }}</small>
+                    </div>
+                </div>
+            </div>
+            <div class="reaction rounded" style="background-color: #fff;">
+                <div class="row m-auto text-center p-4 ">
+                    <!-- <a href="#"><i class="fa-regular fa-heart mr-5"></i></a>
+                    <i class="fa-regular fa-comment mr-5"></i>
+                    <i class="fa-solid fa-share"></i> -->
+                    <div class="col col-md-12">
+                        <form action="{% url 'untangled:like_post' blogs.pk %}" method="POST">
+                            {% csrf_token %}
+                            {% if liked %}
+                                <button type="submit" id="like" name="post_id" value="{{ blogs.pk }}" class="mr-2" style="border: none; outline: none; background-color: transparent;">
+                                    <i class="fa-solid liked fa-heart mr-1"></i> Liked 
+                                </button> 
+                            {% else %}
+                                <button type="submit" id="like" name="post_id" value="{{ blogs.pk }}" class="mr-2" style="border: none; outline: none; background-color: transparent;">
+                                    <i class="fa-solid fa-heart mr-1"></i> Like
+                                </button> 
+                            {% endif %}
+                                <small class="ml-2"><div id="like_count">{{ blogs.total_likes }} people like/s</div></small>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+       
+    
+
+<!-- <div class="author-details">
+    <img decoding=async  data-opt-src="https://mllj2j8xvfl0.i.optimole.com/cb:pJlS~36fbd/w:60/h:60/q:90/f:avif/https://s15165.pcdn.co/wp-content/uploads/2021/09/joe-warnimont-headshot.jpeg"  src="https://mllj2j8xvfl0.i.optimole.com/cb:pJlS~36fbd/w:60/h:60/q:eco/f:avif/https://s15165.pcdn.co/wp-content/uploads/2021/09/joe-warnimont-headshot.jpeg" width="60" height="60" alt="Joe Warnimont" /><noscript><img decoding=async  src="https://mllj2j8xvfl0.i.optimole.com/cb:pJlS~36fbd/w:60/h:60/q:90/f:avif/https://s15165.pcdn.co/wp-content/uploads/2021/09/joe-warnimont-headshot.jpeg" width="60" height="60" alt="Joe Warnimont" /></noscript>
+<div class="byline">
+<h3>By
+<a href="https://themeisle.com/blog/author/joe-w/">
+<span>Joe Warnimont</span>
+</a>
+</h3>
+<h4>Themeisle Contributor</h4>
+<a href="https://themeisle.com/blog/author/joe-w/">
+<h5>108 Posts</h5>
+</a>
+</div>
+</div>
+<div class="author-description">
+<p itemprop="description">Joe Warnimont is a Chicago-based writer who focuses on WordPress, eCommerce tools, and social media. When not fishing or practicing yoga, he's collecting stamps at national parks (even though that's mainly for children). Check out Joe's portfolio to contact him and view past work at joewarnimont.com.</p>
+</div>			</div>
+
+</div>		<div class="sticky-sidebar">
+<div class="share-now">
+<h3>Show your love!</h3>
+<a href="http://www.facebook.com/sharer.php?u=https://themeisle.com/blog/best-google-fonts/" class="share-facebook" target="_blank">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title/><g><path d="M21,1H3A2,2,0,0,0,1,3V21a2,2,0,0,0,2,2h7.5a.5.5,0,0,0,.5-.5v-7a.5.5,0,0,0-.5-.5h-1a.5.5,0,0,1-.5-.5v-3a.5.5,0,0,1,.5-.5h1a.5.5,0,0,0,.5-.5v-1A4.5,4.5,0,0,1,15.5,5h3a.5.5,0,0,1,.5.5v3a.5.5,0,0,1-.5.5h-3a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h3a.5.5,0,0,1,.49.58l-.5,3A.5.5,0,0,1,18,15H15.5a.5.5,0,0,0-.5.5v7a.5.5,0,0,0,.5.5H21a2,2,0,0,0,2-2V3A2,2,0,0,0,21,1Z" style="fill:#fff"/></g></svg>						<span>Share</span>
+</a>
+<a href="https://twitter.com/share?url=https://themeisle.com/blog/best-google-fonts/&amp;text=20 Best Google Fonts for Blogging + How to Use Them on WordPress" class="share-twitter" target="_blank">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title/><g><path d="M23.87,4.43a.5.5,0,0,0-.6-.1,4.76,4.76,0,0,1-.75.27A4.85,4.85,0,0,0,23.37,3a.5.5,0,0,0-.77-.53,10.59,10.59,0,0,1-2.53,1A5.05,5.05,0,0,0,16.5,2a5.71,5.71,0,0,0-3,.93C11.6,4,11.27,6.47,11.41,8a13,13,0,0,1-9-4.76A.53.53,0,0,0,2,3a.5.5,0,0,0-.4.25,5.35,5.35,0,0,0,.22,5.7c-.15-.1-.31-.22-.47-.35A.5.5,0,0,0,.5,9,5.73,5.73,0,0,0,3,13.64l-.39-.11A.5.5,0,0,0,2,14.2a6.48,6.48,0,0,0,4.19,3.62A9.22,9.22,0,0,1,.56,19a.5.5,0,0,0-.31.93A15.2,15.2,0,0,0,8,22H8a13.35,13.35,0,0,0,10-4.63,13.63,13.63,0,0,0,3.65-9.92A9.81,9.81,0,0,0,23.92,5,.5.5,0,0,0,23.87,4.43ZM8,21.5Z" style="fill:#fff"/></g></svg>						<span>Tweet</span>
+</a>
+<a href="https://www.youtube.com/channel/UCAQcBsP3h6p5yXgFap4LEGA?sub_confirmation=1" class="share-youtube" target="_blank">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title/><path d="M21.80731,7.805a2.79915,2.79915,0,0,0-2.54907-2.53906C17.69061,5.13586,15.36707,5,12.50012,5c-3.45251,0-6.05865.14105-7.74353.27332A2.79932,2.79932,0,0,0,2.1925,7.815C2.08936,8.90021,2,10.33344,2,12.0423c0,1.66632.08862,3.07422.19128,4.14594a2.79852,2.79852,0,0,0,2.56384,2.53833C6.43994,18.85883,9.04657,19,12.50012,19c2.86694,0,5.19049-.13586,6.75812-.266a2.799,2.799,0,0,0,2.54907-2.539C21.91052,15.11548,22,13.69189,22,12S21.91052,8.88452,21.80731,7.805ZM9.77594,14.93878V9.06122L15.574,12Z" style="fill:#fff"/></svg>						<span>Subscribe</span>
+</a>
+</div> -->
+
+
+{% endblock %}

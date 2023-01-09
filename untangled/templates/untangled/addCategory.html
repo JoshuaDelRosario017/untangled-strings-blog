@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    | Add Category
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="container" >
+    <div class="innerContainer rounded col">
+        <h3 class="text-center pt-5">Add Blog Category</h3>
+        {% if messages %}
+        <div class="message">
+            {% for message in messages %}
+                <p {% if message.tags %} class="alert {{ message.tags }} col-md-6 text-center"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <form action="{% url 'untangled:processAddCategory' %}" class="" method="post"> 
+            <div class="input-group col-md-6 inpcategory mb-3"> 
+                {% csrf_token %}  
+                    <input type="text" name="category" class="form-control text-center" autocomplete="off" required>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-success">Add</button>
+                    </div>
+            </div>
+        </form>
+        <div class="category ">
+            <p class="text-center">To delete category, click the category from the box below.</p>
+            <div class="col-md-6 CategoryList ">
+                <div class="d-flex flex-wrap">
+                    {% for cat in categories %}
+                        <a href="{% url 'untangled:deleteCategories' cat.id %}" class="catListItem">{{ cat.blog_categories }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+
+<!-- 
+    <div class="container" >
+        <div class="innerContainer col">
+            {{hey}}
+            <h3 class="text-center pt-5">Add Blog Category</h3>
+            {% if messages %}
+            <div class="message">
+                {% for message in messages %}
+                    <p {% if message.tags %} class="alert {{ message.tags }} col-lg-6 text-center"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+            <form action="{% url 'untangled:processAddCategory' %}" class="" method="post"> 
+                <div class="input-group col-lg-6 inpcategory mb-3"> 
+                    {% csrf_token %}  
+                        <input type="text" name="category" class="form-control text-center" required>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-success">Add</button>
+                        </div>
+                </div>
+            </form>
+            
+            <div class="category ">
+                <p class="text-center">To delete category, click the category from the box below.</p>
+                <div class="col-lg-6 CategoryList ">
+                    <div class="d-flex flex-wrap">
+                        {% for cat in categories %}
+                            <a href="{% url 'untangled:deleteCategories' cat.id %}" class="catListItem">{{ cat.blog_categories }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div> -->
+
+    {% endblock %}

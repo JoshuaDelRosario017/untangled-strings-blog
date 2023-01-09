@@ -1,0 +1,13 @@
+<div class="col-md-3 col-flex-item">
+    <!-- <h3>Pages</h3> -->
+    <ol class="p-3" > 
+        <ul>
+            <h2 class="mb-4 text-center">Work Pages</h2>
+            <a href="{% url 'untangled:published' %}" style="text-decoration: none;" class="pages"><i class="fa-solid fa-upload mr-2"></i>Published</a>
+            <hr style="margin: 5px;">
+            <a href="{% url 'untangled:drafts' %}" style="text-decoration: none;" class="pages"><i class="fa-solid fa-file mr-2"></i>Drafts</a>
+            <hr style="margin: 5px;">
+            <a href="{% url 'untangled:deleted' %}" style="text-decoration: none;" class="pages"><i class="fa-solid fa-trash mr-2"></i>Trash (Deleted)</a>
+        </ul>
+    </ol>
+</div>

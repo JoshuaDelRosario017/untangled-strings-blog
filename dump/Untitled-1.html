@@ -1,0 +1,50 @@
+<div class="form-group row mt-2 mb-3">
+    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">First Name</label>
+    <div class="col-md-9">
+        <!-- <input type="text" class="form-control" id="firstName" name="firstName" value="{{ user.fname }}"> -->
+        {{ form.first_name }}
+    </div>
+</div>
+<div class="form-group row mt-2 mb-3">
+    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">Last Name</label>
+    <div class="col-md-9">
+        <!-- <input type="text" class="form-control" id="lastName" name="lastName" value="{{ user.lname }}" autocomplete="off"> -->
+        {{ form.last_name }}
+    </div>
+</div>
+<div class="form-group row mt-2 mb-3">
+    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">Username</label>
+    <div class="col-md-9">
+        <!-- <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}"> -->
+        {{ form.username }}
+    </div>
+</div>
+<div class="form-group row mt-2 mb-3">
+    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">Email Address</label>
+    <div class="col-md-9">
+        <!-- <input type="text" class="form-control" id="email" name="email" value="{{ user.email }}"> -->
+        {{ form.email }}
+    </div>
+</div>
+<div class="form-group row mt-2 mb-5">
+    <label for="FirstName" class="col-md-3 col-form-label font-weight-bold">About Yourself</label>
+    <div class="col-md-9">
+        <Textarea class="form-control" id="bio" name="bio" rows="5" maxlength="500"></Textarea>
+        <div id="count" class="float-right">/ 500 Characters</div>
+    </div>
+</div>
+
+
+
+
+@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+def loggedIn(request):
+    if request.user.is_authenticated:
+        username = request.user.username
+        template = loader.get_template('untangled/home.html')
+        context = {
+            'username': username
+        }
+        return HttpResponse(template.render(context,request))
+    else:
+        return render(request, 'untangled/home.html')

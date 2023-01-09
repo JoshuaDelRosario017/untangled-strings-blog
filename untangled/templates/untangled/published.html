@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	 | Published
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container py-4 px-4 mb-5" style="background-color:  #fff; border-radius: 10px;">
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row row-flex">
+                
+                <div class="col col-flex-item">
+                    <h2 class="text-center mt-3">YOUR PUBLISHED BLOGS</h2>
+                    <hr>
+                    <div class="row-md-9 col-flex-item">
+                        {% if blog_obj %}
+                        {% for blog in blog_obj %}
+                        <div class="card mb-3 rounded">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <img src="..." class="card-img-top" alt="...">
+                              </div>
+                              <div class="col-md-8">
+                                <div class="card-body">
+                                  <h5 class="card-title"><a href="{% url 'untangled:blogEntry' blog.pk  %}" style="color: #000;">{{ blog.blog_title|truncatechars:30 }} - </a><small>[<a href="{% url 'untangled:blogEntry' blog.pk  %}" class="text-success">View</a> &#x2022 <a href="#">Unpublish</a> &#x2022 <a href="#" class="text-danger">Delete</a>]</small></h5>
+                                  <p class="card-text">{{ blog.blog_description|truncatechars:130 }}</p>
+                                  <p class="card-text"><small class="text-muted">Published {{ blog.blog_pubdate|timesince }} ago</small></p>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!-- <table class="table table-bordered table-striped mt-3 ">
+                            <thead class="text-center row-md-12">
+                                <tr class="row-md-12">
+                                    <th>ID</th>
+                                    <th>TITLE</th>
+                                    <th>CATEGORY</th>
+                                    <th>AUTHOR</th>
+                                    <th>PUBLISHED DATE</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            {% for blog in blog_obj %}
+                            <tbody class="text-center">
+                                <tr>
+                                    <td>{{ blog.blog_id }}</td>
+                                    <td>{{ blog.blog_title|truncatechars:10 }}</td>
+                                    <td>{{ blog.blog_category }}</td>
+                                    <td>{{ blog.blog_author }}</td>
+                                    <td>{{ blog.blog_pubdate }}</td>
+                                    <td class="text-center">
+                                        <a href="{% url 'untangled:blogEntry' blog.pk  %}" class="btn btn-success btn-sm">View</a>
+                                        <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                        </table> -->
+                        <ul class="pagination" aria-colcount="">
+                            {% if blog_obj.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ blog_obj.previous_page_number }}">Previous</a></li>
+                            {% endif %}
+        
+                            {% if blog_obj.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ blog_obj.next_page_number }}">Next</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ blog_obj.paginator.num_pages }}">Last &raquo;</a></li>
+                            {% endif %}
+                        </ul>
+                        
+                        {% else %}
+                            <h4 class="text-center mt-5">No Blog/s has been published yet. Try to <a href="{% url 'untangled:add' %}">Create</a> one.</h4>
+                        {% endif %}
+                    </div>
+                </div>
+                {% include 'untangled/workpages.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

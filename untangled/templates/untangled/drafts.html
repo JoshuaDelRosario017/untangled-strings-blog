@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	 | Drafts
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container py-4 px-4 mb-5" style="background-color:  #fff; border-radius: 10px;">
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row row-flex">
+                
+                <div class="col col-flex-item">
+                    <h2 class="text-center mt-3">YOUR DRAFT BLOGS</h2>
+                    <hr>
+                    <div class="row-md-9 col-flex-item">
+                        {% if blog_obj %}
+                        {% for blog in blog_obj %}
+                        <div class="card mb-3 rounded">
+                            <div class="row">
+                              <div class="col-md-3">
+                                <img src="..." class="card-img-top" alt="...">
+                              </div>
+                              <div class="col-md-9">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5 class="card-title"><a href="{% url 'untangled:blogEntry' blog.pk  %}" style="color: #000;">{{ blog.blog_title|truncatechars:30 }}</a> <small>[<a href="#">Edit</a> &#x2022 <a href="#" class="text-danger">Delete</a>]</small></h5>
+                                            <p class="card-text">{{ blog.blog_description|truncatechars:130 }}</p>
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        </div>
+                                        <div class="col col-md-3 m-auto "><a href="#" class="btn btn-warning text-center"><i class="fa-solid fa-pen-to-square card-fa text-dark mr-2"></i>Edit</a></div>
+                                        <div class="col col-md-3 m-auto"><a href="#" class="btn btn-danger text-center"><i class="fa-solid fa-trash card-fa text-light mr-2"></i>Delete</a></div>
+                                    </div>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!-- <table class="table table-bordered table-striped  mt-3 ">
+                            <thead class="text-center row-md-12">
+                                <tr class="row-md-12">
+                                    <th>ID</th>
+                                    <th>TITLE</th>
+                                    <th>CATEGORY</th>
+                                    <th>AUTHOR</th>
+                                    <th>PUBLISHED DATE</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            {% for blog in blog_obj %}
+                            <tbody class="text-center">
+                                <tr>
+                                    <td>{{ blog.blog_id }}</td>
+                                    <td>{{ blog.blog_title }}</td>
+                                    <td>{{ blog.blog_category }}</td>
+                                    <td>{{ blog.blog_author }}</td>
+                                    <td>{{ blog.blog_pubdate }}</td>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                                        <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                        </table> -->
+                        
+                        {% else %}
+                            <h4 class="text-center mt-5">No Draft available. Try to <a href="{% url 'untangled:add' %}">Create</a> and publish a blog now.</h4>
+                        {% endif %}
+                    </div>
+                </div>
+                {% include 'untangled/workpages.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
