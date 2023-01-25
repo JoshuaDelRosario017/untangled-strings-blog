@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'untangled',
+    'untangledStringsAdmin',
     'ckeditor',
     'ckeditor_uploader',
     'social_django',
