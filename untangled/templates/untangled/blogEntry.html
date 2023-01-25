@@ -27,8 +27,11 @@
             </div>
             <hr>
                 <div class="mb-3">
-                    Category: <a href="#" class="text-light"> <small class="bg-dark text-light p-1 rounded">{{ blogs.blog_category }}</small></a>
-                </div>
+                    Category: 
+                    {% for tags in blogs.blog_tags.0 %}
+                        <a href="#" class="text-light"> <small class="bg-dark text-light p-1 rounded">{{ tags|striptags }}</small></a>
+                    {% endfor%}
+                    </div>
         </div>
         <div class="col-md-4 mb-3" >
             <div class="mb-3 rounded post-details" style="background-color: #fff;">

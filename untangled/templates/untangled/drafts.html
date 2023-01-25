@@ -19,12 +19,12 @@
                     <div class="row-md-9 col-flex-item">
                         {% if blog_obj %}
                         {% for blog in blog_obj %}
-                        <div class="card mb-3 rounded">
+                        <div class="card mb-3 rounded work-pages-cards">
                             <div class="row">
-                              <div class="col-md-3">
-                                <img src="..." class="card-img-top" alt="...">
+                              <div class="col-md-4">
+                                <img src="{{ blog.blog_thumbnail }}" class="card-img-top" alt="{{ blog.blog_thumbnail }}">
                               </div>
-                              <div class="col-md-9">
+                              <div class="col-md-8">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-8">

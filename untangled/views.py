@@ -173,10 +173,10 @@ def processDraftPost(request):
     lname = user.last_name
     userid = user.id
 
-    blogcreated = Blogs.objects.create(blog_title=title, blog_description=description, blog_body=body, blog_author='{}'.format(fname+' '+lname),blog_userid=userid,blog_category=category,is_draft=True)
+    blogcreated = Blogs.objects.create(blog_title=title, blog_description=description, blog_body=body, blog_author='{}'.format(fname+' '+lname), blog_userid_id=userid, blog_tags=category,is_draft=True)
     blogcreated.save()
     messages.success(request, 'Blog save as Draft, you can access it on "Drafts" page.')
-    return redirect('/add')
+    return redirect('/create')
 
 @login_required(login_url='/login') 
 def addCategory(request):

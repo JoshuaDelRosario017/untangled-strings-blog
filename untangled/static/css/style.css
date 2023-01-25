@@ -27,7 +27,7 @@
 
 body {
   background-color: var(--border);
-  user-select: none;
+  /* user-select: none; */
 }
 
 html {
@@ -786,6 +786,14 @@ input, textarea{
 /*======================================
   LANDING PAGE CARDS & OTHER CARDS ANIMS
 ========================================*/
+.work-pages-cards {
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 10px 0 rgba(22, 22, 26, 0.18);
+  border-radius: 0;
+  border: 0;
+}
+
+
 .landingpage, .published-card {
   transition: transform 0.2s ease;
   margin-right: 50px;
@@ -794,8 +802,8 @@ input, textarea{
   border: 0;
 }
 
-.landingpage:hover, .published-card:hover {
-  transform: scale(1.1);
+.landingpage:hover, .published-card:hover, .work-pages-cards:hover {
+  transform: scale(1.03);
 }
 
 .card-img-top {
