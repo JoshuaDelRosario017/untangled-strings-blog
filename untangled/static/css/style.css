@@ -855,6 +855,12 @@ input, textarea{
   cursor: pointer;
 }
 
+
+footer {
+  background-color: var(--secondary) !important;
+}
+
+
 /*======================================
   MEDIA QUERIES
 ========================================*/
