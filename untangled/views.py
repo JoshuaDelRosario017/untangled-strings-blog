@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -14,16 +14,20 @@ from django.contrib.auth.models import User
 from django import forms
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
-from django.contrib.auth.views import PasswordChangeView
-from django.utils import timezone
+# from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView, PasswordResetView, PasswordResetConfirmView
+# from django.contrib.auth import views as auth_views
+
+
+# from django.utils import timezone
+from datetime import datetime
 from django.core.paginator import Paginator
 
 from .models import *
 from .forms import *
 # Create your views here.
 
-now = timezone.now()
+# now = datetime.datetime.now()
 
 # @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 # def loggedIn(request):
@@ -41,7 +45,7 @@ now = timezone.now()
 class UserRegisterView(generic.CreateView):
     form_class = SignUpForm
     template_name = 'registration/register.html'
-    success_url =  reverse_lazy('login')
+    success_url =  reverse_lazy('login/')
 
     def form_valid(self, form_class):
         messages.success(self.request, 'Successfully Register')
@@ -71,13 +75,13 @@ class LoginView(generic.CreateView):
 def loggedIn(request):
     if request.user.is_authenticated:
         username = request.user.username
-        template = loader.get_template('untangled/home.html')
+        template = loader.get_template('untangled/landingpage.html')
         context = {
             'username': username
         }
         return HttpResponse(template.render(context,request))
     else:
-        return render(request, 'untangled/home.html')
+        return render(request, 'untangled/landingpage.html')
 
 
 def home(request):
@@ -91,37 +95,33 @@ def contact(request):
     return render(request, 'untangled/contact.html')
 
 def loginview(request):
-    return render(request, 'untangled/login.html')
+    messages.warning(request, "Please log in first to continue")
+    return render(request, 'registration/login.html')
 
-def registerview(request):
-    return render(request, 'untangled/register.html')
+# def registerview(request):
+#     return render(request, 'registration/register.html')
 
 def process(request):
-    # if request.method == 'POST':
-    #     form = LoginForm(request.POST)
-    #     if form.is_valid():
-    #         remember_me = form.cleaned_data['remember_me']
     username = request.POST.get('username')
     password = request.POST.get('password')
 
     user = authenticate(username=username, password=password)
     if user is not None:
         login(request, user)
-        # if not remember_me:
-        #     request.session.set_expiry(0)
         return HttpResponseRedirect('/')
     else:
-        return render(request, 'untangled/login.html', {
-            'error_message': "Login Failed, Incorrect Username or Password.",
-            'user': user
+        messages.error(request, 'Login Failed, Incorrect Username or Password.')
+        return render(request, 'registration/login.html', {
+            # 'error_message': "Login Failed, Incorrect Username or Password.",
+            # 'user': user
         })
 
 def processlogout(request):
     logout(request)
     messages.success(request, "Successfully Logout")
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/blogs')
 
-@login_required(login_url='/login')
+@login_required(login_url='/login') 
 def add(request):
     category = Category.objects.all()
     return render(request,'untangled/add.html', {'categories': category})
@@ -142,10 +142,10 @@ class AddPostView(CreateView):
 @login_required(login_url='/login')
 def processAddPost(request):
     title = request.POST.get('title')
-    category = request.POST.get('category')
+    tags = request.POST.getlist('tags')
     description = request.POST.get('description')
-    body = request.POST.get('blog_body')
-    hey = request.POST.get('heyyyy')
+    body = request.POST.get('blog_body') 
+    # hey = request.POST.get('heyyyy')
     user =  request.user
     fname = user.first_name
     lname = user.last_name
@@ -156,7 +156,7 @@ def processAddPost(request):
         messages.error(request, 'Title Exist, Be more Unique.')
         return redirect('/create')
     except ObjectDoesNotExist:
-        blogcreated = Blogs.objects.create(blog_title=title.title(), blog_description=description, blog_body=body,blog_pubdate=now, blog_author='{}'.format(fname+' '+lname),blog_userid=user,blog_category=category)
+        blogcreated = Blogs.objects.create(blog_title=title.title(), blog_description=description, blog_body=body,blog_pubdate=datetime.now(), blog_author='{}'.format(fname+' '+lname),blog_userid=user,blog_tags=tags)
         blogcreated.save()
         messages.success(request, 'Blog Succesfully Published.')
         return redirect('/create')
@@ -165,7 +165,7 @@ def processAddPost(request):
 #Make post as Draft
 def processDraftPost(request):
     title = request.POST.get('title')
-    category = request.POST.get('category')
+    category = request.POST.getlist('tags')
     description = request.POST.get('description')
     body = request.POST.get('blog_body')
     user =  request.user
@@ -250,7 +250,7 @@ def setting(request):
 
 def published(request):
     user = request.user
-    blog_obj = Blogs.objects.filter(blog_userid=user.id).filter(blog_pubdate__isnull=False).order_by('blog_id')
+    blog_obj = Blogs.objects.filter(blog_userid=user.id).filter(blog_pubdate__isnull=False).filter(deleted_on__isnull=True).order_by('blog_id')
     paginator = Paginator(blog_obj, 5)
     page_number =  request.GET.get('page')
     blog_obj = paginator.get_page(page_number)
@@ -303,17 +303,23 @@ class blogEntry(DetailView):
 
         context['liked'] = liked
         return context
+    
+    def get_tags(self):
+        tags = blog_tags.objects.value_list('Blogs', flat=True)
 
 def like_post(request, pk):
     post = get_object_or_404(Blogs, blog_id=request.POST.get('post_id'))
     liked = False
-    if post.likes.filter(pk=request.user.id).exists():
+    if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
         liked = False
     else:
         post.likes.add(request.user)
         liked = True
+    
+    # return JsonResponse(data)
     return HttpResponseRedirect(reverse('untangled:blogEntry', args=[str(pk)]))
+    
 
 class PasswordChange(PasswordChangeView):
     form_class = PasswordChangingForm
@@ -322,3 +328,17 @@ class PasswordChange(PasswordChangeView):
     def form_valid(self, form_class):
         messages.success(self.request, 'Password Changed Successfully')
         return super().form_valid(form_class)
+
+
+def landingpage(request):
+    return render(request, 'untangled/landingpage.html')
+
+
+# FOR PASSWORD RESET
+class PassReset(PasswordResetView):
+    form_class = ResetInputEmail
+
+
+#For Books
+def booksSection(request):
+    return render(request, 'untangled/books.html')

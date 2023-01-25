@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+
+{% load static %}
+{% block content %}
+<div class="container1" >
+    <!-- <video src="{% static '../video/LandingPageBG.mp4' %}"></video> -->
+    <video id="background-video" autoplay loop muted poster="/static/img/poster.png">
+        <source src="/static/video/LandingPageBG.mp4" type="video/mp4">
+    </video>
+    <div class="row m-auto text-center">
+        <div class=" col-md-12">
+            <p class="typed-text text-light">Let's <span class="auto-type"></span></p>
+        </div>
+        <div class="row m-auto text-center">
+            <div class="getstarted text-center col col-md-12"> 
+                <a href="{% url 'untangled:home' %}" class="btn btn-getstarted">Start Reading <i class="fa-solid fa-book ml-2"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container1" style="background: white;">
+    <div class="row d-flex justify-content-center align-items-center text-center">
+        <div class="col-md-12 mt-4 mb-5 ldg_scd_title"><h1>Let's Untangle the Strings!</h1></div>
+        <div class="card rounded landingpage col-md-3" style="width: 18rem;">
+            <img class="card-img-top" src="/static/img/landingpageCardImage/imagine.png" alt="Imagine">
+            <div class="card-content-title mt-3"><strong><h4>IMAGINE</h4></strong></div>
+            <div class="card-body">
+                <p class="card-text">Breath and Envision things!</p>
+            </div>
+        </div>
+        <div class="card rounded landingpage col-md-3" style="width: 18rem;">
+            <img class="card-img-top" src="/static/img/landingpageCardImage/create.png" alt="create">
+            <div class="card-content-title mt-3"><strong><h4>CREATE</h4></strong></div>
+            <div class="card-body">
+                <p class="card-text">Be creative and create your unique entries!</p>
+            </div>
+        </div>
+        <div class="card rounded landingpage col-md-3" style="width: 18rem;">
+            <img class="card-img-top" src="/static/img/landingpageCardImage/read.png" alt="read" width="100">
+            <div class="card-content-title mt-3"><strong><h4>READ</h4></strong></div>
+            <div class="card-body">
+                <p class="card-text">Be updated and read the works of other authors!</p>
+            </div> 
+        </div>
+    </div>
+</div>
+{% include 'partials/_footer.html' %}
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>    
+<script>
+    var typed = new Typed(".auto-type", {
+        strings: ["Imagine", "Create", "Read", "Untangle the Strings"],
+        typeSpeed: 100,
+        backSpeed: 100,
+        loop: true
+    })
+</script>
+<!-- <script>
+    var element = document.getElementById("nav");
+    element.classList.add("noBackground");
+</script> -->
+{% endblock%}

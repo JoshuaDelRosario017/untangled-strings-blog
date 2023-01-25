@@ -7,18 +7,19 @@
 {% block content %}
 {% load static %}
 
-<div class="container py-4 px-4 mb-5" style="background-color:  #fff; border-radius: 10px;">
+<div class="container mb-4" style="background-color:  #fff; padding-top: 10px; background-color: var(--primary-color);">
     
-    <div class="row">
+    <div class="row" style="background-color: #fff; box-shadow: 0 4px 10px 0 rgba(22, 22, 26, 0.18);">
         <div class="col-md-12">
             <div class="row row-flex">
-                {% include 'untangled/workpages.html' %}
+                
                 <div class="col col-flex-item">
+                    
                     <h2 class="text-center mt-3">YOUR DELETED BLOGS</h2>
                     <hr>
                     <div class="row-md-9 col-flex-item table-responsive">
                         {% if blog_obj %}
-                        
+                        <p class="alert alert-danger text-center">All deleted entries have 30 days in the trash before it is permanently deleted.</p>
                         <table class="table table-bordered table-striped mt-3 ">
                             <thead class="text-center row-md-12">
                                 <tr class="row-md-12">
@@ -40,7 +41,8 @@
                                     <td>{{ blog.blog_pubdate }}</td>
                                     <td class="text-center">
                                         <!-- <a href="#" class="btn btn-success btn-sm">View</a> -->
-                                        <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                        <a href="#" class="btn btn-success btn-sm">Undo Delete</a>
+                                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -63,7 +65,7 @@
                         {% endif %}
                     </div>
                 </div>
-                
+                {% include 'untangled/workpages.html' %}
             </div>
         </div>
     </div>

@@ -18,28 +18,16 @@
                 {% endfor %}
             </ul>
             {% endif %}
-            <form method="post" id="form" action="">
+            <form method="post" id="myForm" action="" onkeydown="return event.key != 'Enter';">
                 {% csrf_token %} <!-- cross site request forgery-->
                 <div class="form-group mb-3 bg-light rounded" style="background-color: white; padding: 15px;">
                     <div class="col-md-12 mb-5">
                         <label>Blog Title: </label>
-                        <input type="text" name="title" id="fnametitle" autocomplete="off" class="text-center form-control" style="height: 60px; font-weight: bold;" required>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <label for="category">Blog Category: </label>
-                        <select class="form-select mb-3 col-md-6 category" id="categories" name="category" required>
-                            <option class="option" disabled selected>Select Category</option>
-                            {% for cat in categories %} 
-                                <option class="option" style="height: 500px !important" value="{{ cat.blog_categories }}">{{ cat.blog_categories }}</option>
-                            {% endfor %}
-                        </select>
-                        {% if user.is_admin or user.is_staff %}
-                            <a href="{% url 'untangled:addCategory' %}" style="text-decoration: none" class="pages">Add Category</a>
-                        {% endif %}
+                        <input type="text" name="title" id="title" autocomplete="off" class="text-center form-control" style="height: 60px;" placeholder="Enter title here" required>
                     </div>
                     <div class="col-md-12 mb-4">
                         <label>Blog Description:</label>
-                        <textarea name="description" id="description" rows="5" class="form-control" maxlength="2000" required></textarea>
+                        <textarea name="description" id="description" rows="5" class="form-control" maxlength="2000" placeholder="Enter blog description here" required></textarea>
                         <div id="count" class="float-right">0 / 2000 Characters</div>
                     </div>
                     <div class="col-md-12">
@@ -49,6 +37,39 @@
                             {{ form.media }}
                             {{ form.as_p }}
                         {% endif %}
+                    </div>
+                    <label class="col-md-12" for="category">Tags / Category: </label>
+                    <div class="col-md-12 tags mb-4">
+                        
+                        <!-- <select class="form-select mb-3 col-md-6 category" id="categories" name="category" required>
+                            <option class="option" disabled selected>Select Category</option>
+                            {% for cat in categories %} 
+                                <option class="option" style="height: 500px !important" value="{{ cat.blog_categories }}">{{ cat.blog_categories }}</option>
+                            {% endfor %}
+                        </select> -->
+                        <!-- <div class="input-group  col col-md-12"> -->
+                            <!-- <div class="input-group-append">
+                                <button class="btn fa-solid fa-tags" disabled></button>
+                            </div>-->
+                            <!-- <input type="text" id="inputTags"> 
+                            <i class="fa-solid fa-tags"></i>
+                            <div class="div-tags d-flex flex-wrap"></div> -->
+                            <!-- <input type="text" name="tags" id="hiddenInputTags"> -->
+                            
+                            
+                            
+                            <!-- <input type="text" id="inputTags">  -->
+                            
+                            <!-- <div class="div-tags d-flex flex-wrap"></div> -->
+
+                            <input type="text" id="tagInput">
+                            <i class="fa-solid fa-tags"></i>
+                            <div id="tags" class="div-tags d-flex flex-wrap"></div>
+                        <!-- </div> -->
+                        
+                        <!-- {% if user.is_admin or user.is_staff %}
+                            <a href="{% url 'untangled:addCategory' %}" style="text-decoration: none" class="pages">Add Category</a>
+                        {% endif %} -->
                     </div>
                 </div>
                     <!-- <button type="submit" name="draft" class="btn btn-secondary  mr-2">Save as Draft</button>
@@ -100,11 +121,30 @@
 <!-- modify action for form if published or draft -->
 <script>
     function addpostForm() {
-        document.getElementById("form").action = "{% url 'untangled:processAddPost' %}";
+        document.getElementById("myForm").action = "{% url 'untangled:processAddPost' %}";
     }
 
     function savedraft() {
-        document.getElementById("form").action = "{% url 'untangled:processDraftPost' %}";
+        document.getElementById("myForm").action = "{% url 'untangled:processDraftPost' %}";
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#tagInput").on("keyup", function(e) {
+            if(e.keyCode === 13) {
+                var input = $(this).val();
+                var tag = $("<span class='tag'>" + input + "<i class='fa fa-times ml-2 mr-2'></i></span>");
+                var hiddenInput = $("<input type='hidden' name='tags' value='" + input + "'>");
+                $("#tags").append(tag);
+                $("#tags").append(hiddenInput);
+                $(this).val("");
+            }
+        });
+        $(document).on('click', '.fa-times', function(){
+            $(this).parent().remove();
+            $(this).prev('input[name="tags"]').remove();
+        });
+    });
 </script>
 {% endblock %}

@@ -3,10 +3,10 @@ from django import forms
 from django.contrib import admin
 from ckeditor.widgets import CKEditorWidget
 from .models import *
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib.auth import views as auth_views
-
+# from django.contrib.auth.views import PasswordResetView
 
 
 class CreateBlogForm(forms.ModelForm):
@@ -36,17 +36,36 @@ class EditForm(UserChangeForm):
     first_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control mb-3 required'}))
     last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control mb-3'}))
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Enter Username'}))
-    # password = None
+    password = None
     
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email')
 
 class PasswordChangingForm(PasswordChangeForm):
-    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-4', 'type':'password', 'placeholder': 'Enter Password'}), label='Old Password')
-    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-4', 'type':'password', 'placeholder': 'Enter Password'}), label='Enter New Password', help_text="<ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul>")
-    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-3', 'type':'password', 'placeholder': 'Enter Password'}), label='Confirm New Password')
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-4', 'type':'password', 'placeholder': 'Enter old password'}), label='Old Password')
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-4', 'type':'password', 'placeholder': 'Enter new password'}), label='Enter New Password', help_text="<ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul>")
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-3', 'type':'password', 'placeholder': 'Confirm new password'}), label='Confirm Password')
 
     class Meta:
         model = User
         fields = ('old_password', 'new_password1', 'new_password2')
+
+
+class ResetInputEmail(PasswordResetForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control col-md-12', 'placeholder': 'Enter your registered Email'}), label='Email')
+    
+    class Meta:
+        # model = User
+        fields = ('email')
+
+
+# class PassConfirmForm(SetPasswordForm):
+#     new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mb-4 col-md-12'}))
+#     # old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-4', 'type':'password', 'placeholder': 'Enter Password'}), label='Old Password')
+#     # new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-4 col-md-12', 'type':'password', 'placeholder': 'Enter Password'}), label='Enter New Password', help_text="<ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul>")
+#     # new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-3 col-md-12', 'type':'password', 'placeholder': 'Enter Password'}), label='Confirm New Password')
+
+#     class Meta:
+#         # model = User
+#         fields = ('new_password1', 'new_password2')
