@@ -6,9 +6,37 @@
 
 {% block content %}
 {% load static %}
-<div class="container" >
-    <div class="innerContainer rounded col">
-        <h3 class="text-center pt-5">Add Blog Category</h3>
+<div class="container" style="padding-top: 10px; background-color: var(--primary-color)">
+    <h2 class="">Add Blog Category</h2>
+    <div class="row d-flex justify-content-center align-items-center px-3 py-5" style="background-color: #fff; box-shadow: 0 4px 10px 0 rgba(22, 22, 26, 0.18);">
+        {% if messages %}
+        <div class="message col-md-6">
+            {% for message in messages %}
+                <p {% if message.tags %} class="alert {{ message.tags }} col-md-12 text-center"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <form action="{% url 'untangled:processAddCategory' %}" class="form-group col-md-8" method="post"> 
+            <div class="input-group col-md-12 inpcategory mb-3"> 
+                {% csrf_token %}  
+                    <input type="text" name="category" class="form-control text-center" autocomplete="off" required>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-success">Add</button>
+                    </div>
+            </div>
+        </form>
+        <div class="col col-md-12">
+            <p class="text-center">To delete category, click the category from the box below.</p>
+            <div class="col-md-6 CategoryList ">
+                <div class="d-flex flex-wrap">
+                    {% for cat in categories %}
+                        <a href="{% url 'untangled:deleteCategories' cat.id %}" class="catListItem">{{ cat.blog_categories }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="innerContainer col">
         {% if messages %}
         <div class="message">
             {% for message in messages %}
@@ -35,8 +63,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+    </div> -->
+</div>
 
 
 

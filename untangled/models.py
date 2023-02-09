@@ -6,6 +6,7 @@ from django.utils import timezone
 import os, random
 from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
+import json
 # from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 # Create your models here.
@@ -28,8 +29,8 @@ class Blogs(models.Model):
     blog_body = RichTextUploadingField(blank=True, null=True, verbose_name='Blog Body')
     blog_pubdate = models.DateTimeField(null=True)
     blog_author = models.CharField(max_length=100,verbose_name='Blog Author', default=False)
-    blog_userid = models.ForeignKey(User,  on_delete=models.CASCADE)
-    blog_tags = models.CharField(max_length=50, verbose_name='Blog Category', default=False)
+    blog_user = models.ForeignKey(User,  on_delete=models.CASCADE)
+    blog_category = models.CharField(max_length=255, verbose_name='Blog Category')
     # blog_tags = models.JSONField(null=True, verbose_name='Tags')
     deleted_on = models.DateTimeField(verbose_name='Deleted Date-Time', null=True)
     is_draft = models.BooleanField(null=False, default=False)
@@ -45,6 +46,13 @@ class Blogs(models.Model):
     def __str__(self):
         return self.blog_title
 
+    # def get_blog_tags(self):
+    #     return json.loads(self.blog_tags)
+
+
+# class tags(models.Model):
+#     blog_id = models.ForeignKey(Blogs, related_name='blog_tags', on_delete=models.CASCADE)
+#     blog_tags = models.CharField(max_length=100, verbose_name='Blog Category')
 
 class Category(models.Model):
     blog_categories = models.CharField(max_length=50, verbose_name='category')

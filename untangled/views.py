@@ -14,9 +14,10 @@ from django.contrib.auth.models import User
 from django import forms
 from django.urls import reverse_lazy
 from django.views import generic
-# from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView, PasswordResetConfirmView
-# from django.contrib.auth import views as auth_views
+from django.core.mail import send_mail
+import json
+import cv2
 
 
 # from django.utils import timezone
@@ -139,10 +140,10 @@ class AddPostView(CreateView):
     
     
 
-@login_required(login_url='/login')
+@login_required(login_url='')
 def processAddPost(request):
     title = request.POST.get('title')
-    tags = request.POST.getlist('tags')
+    category = request.POST.get('category')
     description = request.POST.get('description')
     body = request.POST.get('blog_body') 
     # hey = request.POST.get('heyyyy')
@@ -156,7 +157,7 @@ def processAddPost(request):
         messages.error(request, 'Title Exist, Be more Unique.')
         return redirect('/create')
     except ObjectDoesNotExist:
-        blogcreated = Blogs.objects.create(blog_title=title.title(), blog_description=description, blog_body=body,blog_pubdate=datetime.now(), blog_author='{}'.format(fname+' '+lname),blog_userid=user,blog_tags=tags)
+        blogcreated = Blogs.objects.create(blog_title=title.title(), blog_description=description, blog_body=body,blog_pubdate=datetime.now(), blog_author='{}'.format(fname+' '+lname),blog_user=user,blog_category=category)
         blogcreated.save()
         messages.success(request, 'Blog Succesfully Published.')
         return redirect('/create')
@@ -178,7 +179,7 @@ def processDraftPost(request):
     messages.success(request, 'Blog save as Draft, you can access it on "Drafts" page.')
     return redirect('/create')
 
-@login_required(login_url='/login') 
+@login_required(login_url='') 
 def addCategory(request):
     category = Category.objects.all()
     return render(request,'untangled/addCategory.html', {'categories': category})
@@ -250,7 +251,8 @@ def setting(request):
 
 def published(request):
     user = request.user
-    blog_obj = Blogs.objects.filter(blog_userid=user.id).filter(blog_pubdate__isnull=False).filter(deleted_on__isnull=True).order_by('blog_id')
+    blog_obj = Blogs.objects.filter(blog_user=user.id).filter(blog_pubdate__isnull=False).filter(deleted_on__isnull=True).order_by('blog_id')
+    # tags = tags.objects.filter(blog_id_id=blog_obj.blog_id)
     paginator = Paginator(blog_obj, 5)
     page_number =  request.GET.get('page')
     blog_obj = paginator.get_page(page_number)
@@ -258,7 +260,7 @@ def published(request):
 
 def drafts(request):
     user = request.user
-    blog_obj = Blogs.objects.filter(is_draft=True).filter(blog_userid=user.id).order_by('blog_id')
+    blog_obj = Blogs.objects.filter(is_draft=True).filter(blog_user=user.id).order_by('blog_id')
     paginator = Paginator(blog_obj, 5)
     page_number =  request.GET.get('page')
     blog_obj = paginator.get_page(page_number)
@@ -292,22 +294,35 @@ class blogEntry(DetailView):
     model = Blogs
     template_name = 'untangled/blogEntry.html'
 
+    # def get_queryset(self):
+    #     pk = self.kwargs.get("pk")
+    #     field_name = self.kwargs.get("blog_tags")
+    #     queryset = self.model.objects.filter(blog_id=pk)
+    #     return queryset.getlist(field_name)
+
     def get_context_data(self, *args, **kwargs):
         context = super(blogEntry, self).get_context_data(*args, **kwargs)
         reaction = get_object_or_404(Blogs, pk=self.kwargs['pk'])
         total_likes = reaction.total_likes()
 
+        # tags = get_object_or_404(Blogs, pk=self.kwargs['pk'])
+        # tag_list = tags.get_blog_tags()
+
+        
+
         liked = False
         if reaction.likes.filter(pk=self.request.user.id).exists():
             liked = True
 
+        # context['queryset'] = self.get_queryset()
         context['liked'] = liked
+        # context['tags'] = tag_list.value_list('blog_tags', flat=True)
         return context
     
-    def get_tags(self):
-        tags = blog_tags.objects.value_list('Blogs', flat=True)
+    # def get_tags(self):
+    #     tags = blog_tags.objects.value_list('Blogs', flat=True)
 
-def like_post(request, pk):
+def like_post(request, pk, blog_title):
     post = get_object_or_404(Blogs, blog_id=request.POST.get('post_id'))
     liked = False
     if post.likes.filter(id=request.user.id).exists():
@@ -318,7 +333,7 @@ def like_post(request, pk):
         liked = True
     
     # return JsonResponse(data)
-    return HttpResponseRedirect(reverse('untangled:blogEntry', args=[str(pk)]))
+    return HttpResponseRedirect(reverse('untangled:blogEntry', args=[str(pk),blog_title]))
     
 
 class PasswordChange(PasswordChangeView):
@@ -342,3 +357,49 @@ class PassReset(PasswordResetView):
 #For Books
 def booksSection(request):
     return render(request, 'untangled/books.html')
+
+# def capture_image(request):
+#     cv2.namedWindow("Camera", cv2.WINDOW_NORMAL)
+#     cap = cv2.VideoCapture(0)
+#     while True:
+#         ret, frame = cap.read()
+#         if not ret:
+#             return render(request, 'error.html', {'error': 'Failed to access the camera'})
+#         cv2.imshow("Camera", frame)
+#         key = cv2.waitKey(1) & 0xFF
+#         if key == ord('q'):
+#             return HttpResponseRedirect(reverse('untangled:edit-profile'))
+#         elif key == ord("c"):
+#             cv2.imwrite("captured_image.jpg", frame)
+#             # return render(request, 'registration/editprofile.html', {'image_path': 'captured_image.jpg'})
+#             return HttpResponseRedirect(reverse('untangled:edit-profile') + '?image_path=frame.jpg')
+#     cap.release()
+#     cv2.destroyWindow("Camera")
+
+# def display_image(request):
+#     # Get the image path from the query parameters
+#     image_path = request.GET.get('image_path', None)
+
+#     # Render a template that displays the captured image
+#     return render(request, 'registration/editprofile.html', {'image_path': image_path})
+
+    # ret, frame = cap.read()
+    # if not ret:
+    #     return render(request, 'error.html', {'error': 'Failed to access the camera'})
+    # cv2.imwrite("frame.jpg", frame)
+    # cap.release()
+    # return render(request, 'captured_image.html', {'image_path': 'frame.jpg'})
+
+def contact(request):
+    if request.method == "POST":
+        message_name = request.POST['message-name']
+        message_email = request.POST['message-email']
+        message = request.POST['message']
+
+        send_mail(
+            message_name,
+            message_email,
+            message,
+            ['joshuadelrosario17@gmail.com'], 
+            )
+        

@@ -38,15 +38,18 @@
                             {{ form.as_p }}
                         {% endif %}
                     </div>
-                    <label class="col-md-12" for="category">Tags / Category: </label>
+                    <label class="col-md-12" for="category">Blog Category: </label>
                     <div class="col-md-12 tags mb-4">
                         
-                        <!-- <select class="form-select mb-3 col-md-6 category" id="categories" name="category" required>
+                        <select class="form-select mb-3 col-md-8 category" id="categories" name="category" required>
                             <option class="option" disabled selected>Select Category</option>
                             {% for cat in categories %} 
                                 <option class="option" style="height: 500px !important" value="{{ cat.blog_categories }}">{{ cat.blog_categories }}</option>
                             {% endfor %}
-                        </select> -->
+                        </select>
+                        {% if user.is_admin or user.is_staff %}
+                            <a href="{% url 'untangled:addCategory' %}" style="text-decoration: none" class="pages">Add Category</a>
+                        {% endif %}
                         <!-- <div class="input-group  col col-md-12"> -->
                             <!-- <div class="input-group-append">
                                 <button class="btn fa-solid fa-tags" disabled></button>
@@ -62,9 +65,9 @@
                             
                             <!-- <div class="div-tags d-flex flex-wrap"></div> -->
 
-                            <input type="text" id="tagInput">
+                            <!-- <input type="text" id="tagInput">
                             <i class="fa-solid fa-tags"></i>
-                            <div id="tags" class="div-tags d-flex flex-wrap"></div>
+                            <div id="tags" class="div-tags d-flex flex-wrap"></div> -->
                         <!-- </div> -->
                         
                         <!-- {% if user.is_admin or user.is_staff %}

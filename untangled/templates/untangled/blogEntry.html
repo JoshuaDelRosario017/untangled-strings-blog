@@ -27,11 +27,8 @@
             </div>
             <hr>
                 <div class="mb-3">
-                    Category: 
-                    {% for tags in blogs.blog_tags.0 %}
-                        <a href="#" class="text-light"> <small class="bg-dark text-light p-1 rounded">{{ tags|striptags }}</small></a>
-                    {% endfor%}
-                    </div>
+                    Category: <small class="bg-dark text-light p-1 rounded">{{ blogs.blog_category }}</small>
+                </div>
         </div>
         <div class="col-md-4 mb-3" >
             <div class="mb-3 rounded post-details" style="background-color: #fff;">
@@ -54,10 +51,10 @@
                     <i class="fa-solid fa-share"></i> -->
                     <div class="col col-md-12">
                         
-                        <form action="{% url 'untangled:like_post' blogs.pk %}" method="POST">
+                        <form action="{% url 'untangled:like_post' blogs.pk blogs.blog_title|slugify %}" method="POST">
                             {% csrf_token %}
                             
-                            {% if liked == blogs.blog_userid_id %}
+                            {% if liked == blogs.blog_user_id %}
                                 <button type="submit" id="like" name="post_id" value="{{ blogs.pk }}" class="mr-2" style="border: none; outline: none; background-color: transparent;">
                                     <i class="fa-solid liked fa-heart mr-1"></i> Liked 
                                 </button> 

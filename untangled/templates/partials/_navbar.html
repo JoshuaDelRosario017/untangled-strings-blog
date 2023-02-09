@@ -29,18 +29,18 @@
                         {% else %}
                             <a href="{% url 'untangled:change-password' %}" class=" navbar-brand ml-4 logout"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
                         {% endif %}
-                        <a href="{% url 'untangled:processlogout' %}" class=" navbar-brand ml-4 logout"><i class="fa-solid fa-right-from-bracket mr-2"></i>Logout</a>
+                        <a href="{% url 'untangled:processlogout' %}" class=" navbar-brand ml-4 logout"><i class="fa-solid fa-right-from-bracket mr-2"></i>Log out</a>
                     </div>
                 </div>
                 <div class="collapse-other-menu">
-                    <a href="{% url 'untangled:profile' %}" class=" nav-items ml-3 logout">Profile</a>
+                    <a href="{% url 'untangled:profile' %}" class="navbar-brand nav-items ml-3 logout">Profile</a>
                     {% if user.is_superuser or user.is_admin %}
                     <a href="#" class=" nav-items ml-4 logout">Admin Dashboard</a>
-                    <a href="{% url 'untangled:change-password' %}" class=" nav-items ml-4 logout">Change Password</a>
+                    <a href="{% url 'untangled:change-password' %}" class="navbar-brand nav-items ml-4 logout">Change Password</a>
                     {% else %}
-                    <a href="{% url 'untangled:change-password' %}" class=" nav-items ml-4 logout">Change Password</a>
+                    <a href="{% url 'untangled:change-password' %}" class="navbar-brand nav-items ml-4 logout">Change Password</a>
                     {% endif %}
-                    <a href="{% url 'untangled:processlogout' %}" class=" nav-items ml-4 logout">Logout</a>
+                    <a href="{% url 'untangled:processlogout' %}" class="navbar-brand nav-items ml-4 logout">Log out</a>
                 </div>    
                 {% else %}            
                 <a href="{% url 'login' %}" class="nav-items navbar-brand loginnav"><i class="fa-solid fa-right-to-bracket mr-2"></i>Sign up</a>

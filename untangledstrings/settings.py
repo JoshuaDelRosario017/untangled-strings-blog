@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
+import environ
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,7 +94,7 @@ WSGI_APPLICATION = 'untangledstrings.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'untangledstrings_db',
+        'NAME': env('DATABASE_NAME'),
         'USERNAME': 'root',
         'PASSWORD': '',
         'PORT': '3306', 
@@ -238,9 +243,9 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "joshuadelrosario17@gmail.com"
-EMAIL_HOST_PASSWORD = "sdyyiswkogdzmhgq"
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 # Message Tags for views alerts
 MESSAGE_TAGS = {
@@ -257,5 +262,5 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_FACEBOOK_KEY = '1237217173496077'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'b0c0b5f82c8f864839ecd146ac0af498'  # App Secret
+SOCIAL_AUTH_FACEBOOK_KEY = env('SOCIAL_AUTH_FACEBOOK_KEY')  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = env('SOCIAL_AUTH_FACEBOOK_SECRET')  # App Secret

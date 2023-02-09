@@ -1,10 +1,39 @@
+{% load static %}
 <nav>
     <ul>
         <li>
-            <a href="">
-                <i class="fa-solid fa-feather"></i>
+            <a href="{% url 'untangled:landingpage' %}" class="logo">
+                <img src="{% static 'img/logo.png' %}" alt="logo">
                 <span class="nav-item">Untangled Strings</span>
             </a>
         </li>
+        <li><a href="">
+            <i class="fa-solid fa-gauge"></i>
+            <span class="nav-item">Dashboard</span>
+        </a></li>
+        <li><a href="">
+            <i class="fa-solid fa-user"></i>
+            <span class="nav-item">Profile</span>
+        </a></li>
+        <li><a href="">
+            <i class="fa-solid fa-bell"></i>
+            <span class="nav-item">Notification</span>   
+        </a></li>
+        <li><a href="">
+            <i class="fa-solid fa-users"></i>
+            <span class="nav-item">Users</span>
+        </a></li>
+        <li><a href="">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="nav-item">Analytics</span>
+        </a></li>
+        <li><a href="">
+            <i class="fa-solid fa-circle-question"></i>
+            <span class="nav-item">Help</span>
+        </a></li>
+        <li><a href="{% url 'untangled:processlogout' %}" class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="nav-item">Log out</span>
+        </a></li>
     </ul>
 </nav>
