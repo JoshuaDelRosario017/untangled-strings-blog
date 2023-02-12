@@ -398,4 +398,7 @@ def sendMail(request):
         return render(request, 'untangled/contact.html', {'message_name': message_name})
     else:
         return render(request, 'untangled/contact.html', {})
-        
+
+
+def Author(request):
+    return render(request, 'untangled/author.html')

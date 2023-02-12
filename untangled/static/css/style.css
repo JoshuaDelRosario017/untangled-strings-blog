@@ -872,14 +872,14 @@ footer {
   background-color: var(--primary-color) !important;
 }
 
-.ContactBanner {
+.BannerCover {
   height: 40vh !important;
   background: url(/static/img/poster.png) no-repeat;
   background-size: cover;
   border: none;
 }
 
-.insideBanner {
+.BannerTitle {
   padding: 20vh 0;
   color: #fff;
   font-weight: 600;
