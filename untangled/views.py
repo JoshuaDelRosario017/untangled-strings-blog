@@ -30,23 +30,11 @@ from .forms import *
 
 # now = datetime.datetime.now()
 
-# @cache_control(no_cache=True,must_revalidate=True,no_store=True)
-# def loggedIn(request):
-#     if request.user.is_authenticated:
-#         username = request.user.username
-#         template = loader.get_template('untangled/home.html')
-#         context = {
-#             'username': username
-#         }
-#         return HttpResponse(template.render(context,request))
-#     else:
-#         return render(request, 'untangled/home.html')
-
 # Register, View profile and Edit profile View
 class UserRegisterView(generic.CreateView):
     form_class = SignUpForm
     template_name = 'registration/register.html'
-    success_url =  reverse_lazy('login/')
+    success_url =  reverse_lazy('untangled:successRegister')
 
     def form_valid(self, form_class):
         messages.success(self.request, 'Successfully Register')
@@ -67,8 +55,8 @@ class UserEditView(generic.UpdateView):
 class ProfileView(generic.CreateView):
     template_name = 'registration/profile.html'
 
-class LoginView(generic.CreateView):
-    template_name = 'registration/login.html'
+# class LoginView(generic.CreateView):
+#     template_name = 'registration/login.html'
 
 # ------------------- #
 
@@ -92,13 +80,15 @@ def home(request):
 def about(request):
     return render(request, 'untangled/about.html')
 
-def contact(request):
+def contactPage(request):
     return render(request, 'untangled/contact.html')
 
 def loginview(request):
     messages.warning(request, "Please log in first to continue")
     return render(request, 'registration/login.html')
 
+def successRegister(request):
+    return render(request, 'registration/login.html')
 # def registerview(request):
 #     return render(request, 'registration/register.html')
 
@@ -201,7 +191,7 @@ def deleteCategories(request, id):
     category = Category.objects.filter(id=id).delete()
     return redirect('/addCategory')
 
-@login_required(login_url='/login') 
+@login_required(login_url='') 
 def profile(request):
     return render(request, 'untangled/profile.html')
 
@@ -390,7 +380,8 @@ def booksSection(request):
     # cap.release()
     # return render(request, 'captured_image.html', {'image_path': 'frame.jpg'})
 
-def contact(request):
+@login_required(login_url='') 
+def sendMail(request):
     if request.method == "POST":
         message_name = request.POST['message-name']
         message_email = request.POST['message-email']
@@ -398,8 +389,13 @@ def contact(request):
 
         send_mail(
             message_name,
-            message_email,
             message,
-            ['joshuadelrosario17@gmail.com'], 
+            message_email,
+            ['joshuadelrosario17@gmail.com'],
+            fail_silently=False,
             )
+        
+        return render(request, 'untangled/contact.html', {'message_name': message_name})
+    else:
+        return render(request, 'untangled/contact.html', {})
         

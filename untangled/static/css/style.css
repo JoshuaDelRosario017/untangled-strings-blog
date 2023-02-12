@@ -170,7 +170,7 @@ nav {
 }
 
 .navbar {
-  background-color: #ffffff !important;
+  background-color: #fff !important;
 }
 
 .nav-title {
@@ -647,13 +647,13 @@ input, textarea{
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
   bottom: 0;
   top: 0;
   background: rgba(0, 0, 0, 0.5);
   /* background:url(../video/LandingPageBG.mp4); */
   /* background-color: #343F4F; */
-  background-size: cover;
+  /* background-size: cover; */
   overflow: hidden;
 }
 
@@ -692,6 +692,9 @@ input, textarea{
   font-weight: 600;
 }
 
+.getInTouch {
+  font-weight: 600;
+}
 
 
 .typed-text {
@@ -869,6 +872,19 @@ footer {
   background-color: var(--primary-color) !important;
 }
 
+.ContactBanner {
+  height: 40vh !important;
+  background: url(/static/img/poster.png) no-repeat;
+  background-size: cover;
+  border: none;
+}
+
+.insideBanner {
+  padding: 20vh 0;
+  color: #fff;
+  font-weight: 600;
+}
+
 
 /*======================================
   MEDIA QUERIES
@@ -966,5 +982,10 @@ footer {
   }
 }
 
+@media(max-width: 660px) {
+  .contactForm {
+    width: 95vw !important;
+  }
+}
 /* @media */
  
