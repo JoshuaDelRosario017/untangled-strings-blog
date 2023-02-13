@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from untangled.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
@@ -25,4 +25,5 @@ class UsersProfile(UserAdmin):
 
 admin.site.register(Blogs, BlogAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Profile)
 # admin.site.register(UsersProfile)

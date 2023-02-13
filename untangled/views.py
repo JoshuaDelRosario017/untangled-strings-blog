@@ -193,7 +193,15 @@ def deleteCategories(request, id):
 
 @login_required(login_url='') 
 def profile(request):
-    return render(request, 'untangled/profile.html')
+    user = request.user
+    blog_obj = Blogs.objects.filter(blog_user=user.id).filter(blog_pubdate__isnull=False).filter(deleted_on__isnull=True).order_by('blog_id')
+    blog_obj_count = len(Blogs.objects.filter(blog_user=user.id).filter(blog_pubdate__isnull=False).filter(deleted_on__isnull=True).order_by('blog_id'))
+    # tags = tags.objects.filter(blog_id_id=blog_obj.blog_id)
+    paginator = Paginator(blog_obj, 5)
+    page_number =  request.GET.get('page')
+    blog_obj = paginator.get_page(page_number)
+    return render(request, 'untangled/profile.html', {'blog_obj': blog_obj, 'blog_obj_count': blog_obj_count})
+    # return render(request, 'untangled/profile.html')
 
 @login_required(login_url='/login')
 def edit(request):
