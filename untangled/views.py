@@ -320,6 +320,7 @@ class blogEntry(DetailView):
     # def get_tags(self):
     #     tags = blog_tags.objects.value_list('Blogs', flat=True)
 
+@login_required(login_url='')
 def like_post(request, pk, blog_title):
     post = get_object_or_404(Blogs, blog_id=request.POST.get('post_id'))
     liked = False

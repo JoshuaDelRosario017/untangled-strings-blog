@@ -27,6 +27,7 @@
                 <div class="text-center">
                     <img class="img-fluid rounded-circle my-4" id="profileDisplay" src="media{{ user.profile }}" style="border: 3px solid #f09d37; margin: 0 auto; padding: 3px; width: 200px; height:200px;" onerror="this.src='/media/profile_pics/default_pfp.jpeg';this.onerror='';"/>
                 </div>
+                
             </div>
         </div>
         <div class="row justify-content-center mb-5">
@@ -35,9 +36,6 @@
                 <h6 class="text-muted">You can upload a JPG, PNG or GIF file (File size limit is 3MB).<br> Recommended size 200x200.</h6>
                 <input type="file" onChange="displayImage(this)" id="profileImage" data-max-file-size="3M" data-allowed-file-extensions="jpeg png jpg" name="profile" hidden/>
                 <label for="profileImage" class="btn btn-sm btn-primary m-1"><i class="fas fa-upload mr-1"></i>Choose Image</label>
-                <input type="file" onChange="displayImage(this)" id="profileImageByCamera" data-max-file-size="3M" data-allowed-file-extensions="jpeg png jpg" name="profile" value="{{ image_path }}" hidden/>
-                <a href="#" class="btn btn-sm btn-primary m-1" id="profileImageByCamera"><i class="fas fa-camera mr-1"></i>Take Photo</a>
-                <label for="profileImageByCamera" class="btn btn-sm btn-primary m-1"><i class="fas fa-camera mr-1"></i>Take Photo</label>
                 <a class="btn btn-sm btn-outline-secondary m-1">Remove</a>
             </div>
         </div>

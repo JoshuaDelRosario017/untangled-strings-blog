@@ -38,6 +38,7 @@ urlpatterns = [
     # path('capture_image/', capture_image, name='capture_image'),
     path('registration-success/login/', views.successRegister, name='successRegister'),
     path('Authors/', views.Author, name='Author'), #Author page
+    
    
     #URLs for registration
     path('profile/', ProfileView.as_view(), name='ProfileView'),

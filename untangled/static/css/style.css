@@ -30,6 +30,8 @@ body {
   font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
   /* user-select: none; */
 }
 
@@ -619,7 +621,7 @@ input, textarea{
   width: 100vw;
   overflow: hidden;
   background-color: transparent;
-  position: fixed;
+  position: absolute;
 }
 
 .loader {
@@ -684,7 +686,7 @@ input, textarea{
 } */
 .getstarted .btn-getstarted {
   display: inline-block;
-  border: 4px solid #fff;
+  border: 2px solid #fff;
   padding: 12px;
   color: #fff;
   box-shadow: none;
@@ -888,7 +890,13 @@ footer {
   font-weight: 600;
 }
 
+.BannerCover .BannerTitle h1 {
+  text-transform: uppercase;
+}
 
+.BannerCover .BannerTitleProfile h1 {
+  text-transform: uppercase;
+}
 /* .socials a {
   font-size: 10em;
 } */
@@ -943,7 +951,32 @@ a {
   border-radius: 50%;
   display: block;
   box-shadow: 1px 3px 12px rgba(0, 0, 0, 0.18);
+  position: relative;
 }
+
+.header__wrapper .cols__container .left__col .img__container .profile-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 10px;
+  display: none;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.header__wrapper .cols__container .left__col .img__container .profile-text h5 {
+ margin-top: 27px;
+}
+
+.header__wrapper .cols__container .left__col .img__container:hover .profile-text {
+  display: flex;
+}
+
 .header__wrapper .cols__container .left__col .img__container span {
   position: absolute;
   background: #2afa6a;
@@ -956,7 +989,7 @@ a {
   border: 2px solid #fff;
 }
 .header__wrapper .cols__container .left__col h2 {
-  margin-top: 75px;
+  margin-top: 100px;
   font-weight: 600;
   font-size: 22px;
   margin-bottom: 5px;
@@ -1055,6 +1088,13 @@ a {
   object-fit: cover;
 } */
 
+.modal-backdrop:nth-child(2n-1) {
+  display: none;
+}
+
+.modal-body {
+  flex-direction: column;
+}
 
 /*======================================
   MEDIA QUERIES
@@ -1195,6 +1235,7 @@ a {
   .header__wrapper .cols__container .right__col nav button {
     margin-top: 0;
   }
+  
 }
 
 @media (max-width: 867px) {
@@ -1205,6 +1246,10 @@ a {
   }
   .header__wrapper .cols__container .right__col nav div {
     margin: auto;
+  }
+  .header__wrapper .cols__container .left__col .img__container img {
+    width: 120px;
+    height: 120px;
   }
 }
 /* @media */
