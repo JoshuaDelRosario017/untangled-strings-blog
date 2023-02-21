@@ -121,19 +121,10 @@ label, .placeholder {
   /* background-color: red; */
 }
 
-/* .divider {
-
-} */
-
-
-
 .btn-log {
   background-color: transparent;
   border: 1px solid #000000;
   color: #000000;
-
-	/* background: rgb(2,0,36);
-	background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(221,97,10,0.9528186274509804) 100%, rgba(0,212,255,1) 100%); */
 }
 
 .btn-log:hover {
@@ -145,16 +136,6 @@ label, .placeholder {
 .required:after {
     content:" *";
     color: red;
-}
-
-/*.names {
-	border-width:10px;
- border-style:solid;
- border-color:#287EC7;
-}*/
-
-.tooltip {
-  position: absolute;
 }
 
 .tooltip-wrap .tooltiptext {
@@ -207,7 +188,7 @@ label, .placeholder {
 
 .nav-items {
   /* font-family: 'Poppins', sans-serif; */
-  font-size: 18px !important;
+  font-size: 15px !important;
   display: inline-block;
   position: relative;
 }
@@ -1008,32 +989,38 @@ a {
   right: 11px;
   border: 2px solid #fff;
 }
+
 .header__wrapper .cols__container .left__col h2 {
   margin-top: 100px;
   font-weight: 600;
   font-size: 22px;
   margin-bottom: 5px;
 }
+
 .header__wrapper .cols__container .left__col p {
   font-size: 0.9rem;
   color: #818181;
   margin: 0;
 }
+
 .header__wrapper .cols__container .left__col .about {
   justify-content: space-between;
   position: relative;
   margin: 35px 0;
 }
+
 .header__wrapper .cols__container .left__col .about li {
   display: flex;
   flex-direction: column;
   color: #818181;
   font-size: 0.9rem;
 }
+
 .header__wrapper .cols__container .left__col .about li span {
   color: #1d1d1d;
   font-weight: 600;
 }
+
 .header__wrapper .cols__container .left__col .about:after {
   position: absolute;
   content: "";
@@ -1043,23 +1030,28 @@ a {
   height: 1px;
   width: 100%;
 }
+
 .header__wrapper .cols__container .content p {
   font-size: 1rem;
   color: #1d1d1d;
   line-height: 1.8em;
 }
+
 .header__wrapper .cols__container .content ul {
   gap: 30px;
   justify-content: center;
   align-items: center;
   margin-top: 25px;
 }
+
 .header__wrapper .cols__container .content ul li {
   display: flex;
 }
+
 .header__wrapper .cols__container .content ul i {
   font-size: 1.3rem;
 }
+
 .header__wrapper .cols__container .right__col nav {
   display: flex;
   align-items: center;
@@ -1067,21 +1059,12 @@ a {
   justify-content: space-between;
   flex-direction: column;
 }
+
 .header__wrapper .cols__container .right__col nav div {
   display: inline-block;
   margin-left: auto;
-  /* align-items: end; */
-  /* gap: 20px; */
-  /* flex-direction: column; */
 }
-/* .header__wrapper .cols__container .right__col nav ul li a {
-  text-transform: uppercase;
-  color: #818181;
-} */
-/* .header__wrapper .cols__container .right__col nav ul li:nth-child(1) a {
-  color: #1d1d1d;
-  font-weight: 600;
-} */
+
 .header__wrapper .cols__container .right__col nav .btn-sm {
   background: #0091ff;
   color: #fff;
@@ -1132,9 +1115,6 @@ a {
   .blog-title {
     font-size: 30px;
   }
-  /* .wrapper1 .dynamic-text {
-    font-size: 10px !important;
-  } */
 }
 
 @media(max-width:767px) {
@@ -1146,7 +1126,6 @@ a {
     left: 0;
     bottom: 0;
     width: 100%;
-    /* margin-bottom: 0px !important; */
   }
 
   .post-details {
@@ -1192,7 +1171,23 @@ a {
   #background-video {
     display: none;
   }
-   .container1 {
+  .nav-items {
+    font-size: 18px !important;
+    margin: 0 auto !important;
+    padding: 10px;
+    top: -50px;
+  }
+
+  
+  nav .collapse ul a:hover {
+    background-color: lightgray;
+  }
+
+  nav .navbar-collapse ul {
+    height: 100vh;
+  }
+
+  .container1 {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1200,11 +1195,6 @@ a {
     background-size: cover;
     border: none;
   } 
-  /* .collapse-other-menu {
-    margin-top: 50px;
-    display: block;
-    margin: auto;
-  } */
 
   .drpdwn-menu {
     display: block !important;
@@ -1244,11 +1234,6 @@ a {
     flex-direction: row;
     gap: 30px;
   }
-  /* .header__wrapper .cols__container .right__col .photos {
-    height: 365px;
-    overflow: auto;
-    padding: 0 0 30px;
-  } */
 }
 
 @media (min-width: 1017px) {
@@ -1279,5 +1264,5 @@ a {
     height: 120px;
   }
 }
-/* @media */
+
  
