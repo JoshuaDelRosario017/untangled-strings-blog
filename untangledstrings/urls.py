@@ -22,8 +22,8 @@ from untangled import views
 
 urlpatterns = [
     path('', include('untangled.urls')),
-    path('untangled/', include('untangled.urls')),
-    path('untangledStringsAdmin/', include('untangledStringsAdmin.urls')),
+    # path('untangled/', include('untangled.urls')),
+    path('admin/', include('untangledStringsAdmin.urls')),
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('login', auth_views.LoginView.as_view(), name='login'),

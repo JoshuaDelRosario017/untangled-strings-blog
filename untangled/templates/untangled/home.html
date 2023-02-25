@@ -46,14 +46,28 @@
               </div>
             </div>
           </form>
-          <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark col-md-12">
-            <div class="col-md-6 px-0">
-              <h1 class="display-4 font-italic">Untangled Strings</h1>
-              <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.</p>
-              <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+          <!-- Featured Blog Jumbotron -->
+          {% if featured %}
+            {% for feature in featured %}
+            <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark col-md-12">
+              <div class="col-md-6 px-0">
+                <h1 class="display-4 font-italic">{{ feature.blog_title }}</h1>
+                <p class="lead my-3">{{ feature.blog_description }}</p>
+                <p class="lead mb-0"><a href="{% url 'untangled:blogEntry' feature.pk feature.blog_title|slugify %}" class="text-white font-weight-bold">Continue reading...</a></p>
+              </div>
             </div>
-          </div>
-
+            {% endfor %}
+          {% else %}
+            <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark col-md-12">
+              <div class="col-md-6 px-0">
+                <h1 class="display-4 font-italic">No Featured Entry</h1>
+                <p class="lead my-3">Create your entry now!</p>
+                <p class="lead mb-0"><a href="/create/" class="text-white">Click here →</a></p>
+              </div>
+            </div>
+          {% endif %}
+          
+          <!-- Featured Blog Jumbotron -->
   
         <div class="row mb-2">
           <div class="col-md-6">

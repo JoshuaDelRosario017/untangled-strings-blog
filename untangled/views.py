@@ -24,8 +24,8 @@ import cv2
 from datetime import datetime
 from django.core.paginator import Paginator
 
-from .models import *
-from .forms import *
+from untangled.models import *
+from untangled.forms import *
 # Create your views here.
 
 # now = datetime.datetime.now()
@@ -74,7 +74,8 @@ def loggedIn(request):
 
 
 def home(request):
-    return render(request, 'untangled/home.html')
+    featured = Blogs.objects.filter(is_featured=True)
+    return render(request, 'untangled/home.html', {'featured': featured})
 
 # @login_required(login_url='untangled/loginview')
 def about(request):

@@ -42,16 +42,22 @@ html {
   scroll-behavior: smooth;
 }
 
+
+/************************************
+        SCROLLBAR      
+************************************/
 body::-webkit-scrollbar {
-  width: 15px;
+  width: 13px;
 }
+
 body::-webkit-scrollbar-track {
-  background: var(--scrollbarBG);
+  background: #fff;
 }
+
 body::-webkit-scrollbar-thumb {
   background-color: var(--primary-color) ;
   border-radius: 6px;
-  border: 3px solid var(--scrollbarBG);
+  border: 2px solid var(--scrollbarBG);
 }
 
 .input-group .input-group-append .btn {

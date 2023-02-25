@@ -35,7 +35,7 @@ class Blogs(models.Model):
     deleted_on = models.DateTimeField(verbose_name='Deleted Date-Time', null=True)
     is_draft = models.BooleanField(null=False, default=False)
     likes = models.ManyToManyField(User, related_name='blog_id')
-    # is_featured = models.BooleanField(null=False, default=False)
+    is_featured = models.BooleanField(null=False, default=False)
 
     class Meta:
         ordering = ['blog_id']
