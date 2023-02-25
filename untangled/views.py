@@ -75,7 +75,9 @@ def loggedIn(request):
 
 def home(request):
     featured = Blogs.objects.filter(is_featured=True)
-    return render(request, 'untangled/home.html', {'featured': featured})
+    entries = Blogs.objects.filter(is_featured=False)
+    entries_count = len(entries)
+    return render(request, 'untangled/home.html', {'featured': featured, 'entries': entries, 'entries_count': entries_count})
 
 # @login_required(login_url='untangled/loginview')
 def about(request):

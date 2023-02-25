@@ -31,27 +31,30 @@
           
         {% endif %}
         
-          <form action="#" method="GET">
-            <div class="row ">
+          
+            <div class="row">
               <div class=" col-md-5">
                 {% if user.is_authenticated %}
                     <h2>Hello, {{ user.first_name.title }} {{ user.last_name.title }}!</h2>
                 {% endif %}
               </div>
-              <div class="input-group ml-auto col-md-5">
-                <input type="text" class="form-control " name="search" placeholder="Search by Category" autocomplete="off" required>
-                <div class="input-group-append">
-                  <button type="submit" class="btn mb-3">Search</button>
+              <form action="#" method="GET" class="ml-auto col-md-5">
+              {% csrf_token %}
+                <div class="input-group ">
+                  <input type="text" class="form-control " name="search" placeholder="Search by Category" autocomplete="off" required>
+                  <div class="input-group-append">
+                    <button type="submit" class="btn mb-3">Search</button>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
-          </form>
+          
           <!-- Featured Blog Jumbotron -->
           {% if featured %}
             {% for feature in featured %}
             <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark col-md-12">
               <div class="col-md-6 px-0">
-                <h1 class="display-4 font-italic">{{ feature.blog_title }}</h1>
+                <h1 class="display-5 font-italic" style="font-family: 'Lobster', sans-serif;">{{ feature.blog_title }}</h1>
                 <p class="lead my-3">{{ feature.blog_description }}</p>
                 <p class="lead mb-0"><a href="{% url 'untangled:blogEntry' feature.pk feature.blog_title|slugify %}" class="text-white font-weight-bold">Continue reading...</a></p>
               </div>
@@ -65,39 +68,26 @@
                 <p class="lead mb-0"><a href="/create/" class="text-white">Click here →</a></p>
               </div>
             </div>
-          {% endif %}
-          
-          <!-- Featured Blog Jumbotron -->
-  
+          {% endif %}   
+          <!-- Featured Blog Jumbotron end-->
+        
+        
         <div class="row mb-2">
+          {% for entry in entries %}
           <div class="col-md-6">
             <div class="card flex-md-row mb-4 box-shadow h-md-250">
               <div class="card-body d-flex flex-column align-items-start">
-                <strong class="d-inline-block mb-2 text-primary">World</strong>
+                <p class="mb-3">Category:<strong class="d-inline-block ml-2 text-success">{{ entry.blog_category }}</strong></p> 
                 <h3 class="mb-0">
-                  <a class="text-dark" href="#">Featured post</a>
+                  <a class="text-dark" href="{% url 'untangled:blogEntry' entry.pk entry.blog_title|slugify %}">{{ entry.blog_title }}</a>
                 </h3>
-                <div class="mb-1 text-muted">Nov 12</div>
-                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                <a href="#">Continue reading</a>
+                <div class="mb-1 text-muted">Posted {{ entry.blog_pubdate|timesince }} ago</div>
+                <p class="card-text mb-auto">{{ entry.blog_description|truncatechars:30 }}</a>
               </div>
-              <img class="card-img-right flex-auto d-none d-md-block" src="{% static 'img/logo.png' %}" alt="Card image cap" width="200">
+              <img class="card-img-right flex-auto d-none d-md-block" src="{{ entry.blog_thumbnail }}" alt="Card image cap" width="200">
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="card flex-md-row mb-4 box-shadow h-md-250">
-              <div class="card-body d-flex flex-column align-items-start">
-                <strong class="d-inline-block mb-2 text-success">Design</strong>
-                <h3 class="mb-0">
-                  <a class="text-dark" href="#">Post title</a>
-                </h3>
-                <div class="mb-1 text-muted">Nov 11</div>
-                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                <a href="#">Continue reading</a>
-              </div>
-              <img class="card-img-right flex-auto d-none d-md-block" src="{% static 'img/logo.png' %}" alt="Card image cap" width="200">
-            </div>
-          </div>
+          {% endfor %}
           <button class="d-flex m-auto btn btn-success see-more">See more Blogs...</button>
         </div>
         
