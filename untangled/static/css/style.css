@@ -531,9 +531,9 @@ html {
   font-size: 13px;
 }
 
-table {
+/* table {
   overflow-x: auto;
-}
+} */
 
 a {
   text-decoration: none !important;
@@ -1105,6 +1105,10 @@ a {
   flex-direction: column;
 }
 
+/* header__wrapper home */
+
+
+
 /*======================================
   MEDIA QUERIES
 ========================================*/
@@ -1211,6 +1215,20 @@ a {
   }
 
   .container-left {
+    display: none;
+  }
+
+  .jumbotron {
+    width: 100vw;
+    padding: 15px;
+    margin-left: -9.4vw;
+  }
+
+  .header__wrapper form .input-group {
+    display: none;
+  }
+
+  .header__wrapper div h2 {
     display: none;
   }
 }

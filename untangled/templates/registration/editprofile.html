@@ -19,21 +19,11 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <!-- <div class="">
-            <h2>Edit Profile</h2>
-        </div> -->
-        <!-- <div class=""> -->
         <form method="POST" action=""></form>
-        <!-- <div class=" px-3"> -->
-            
             {% csrf_token %}
-                <!-- PROFILE PICTURE -->
                 <div class="text-center">
                     <img class="img-fluid rounded-circle my-4" id="profileDisplay" src="media{{ user.profile }}" style="border: 3px solid #f09d37; margin: 0 auto; padding: 3px; width: 200px; height:200px;" onerror="this.src='/media/profile_pics/default_pfp.jpeg';this.onerror='';"/>
                 </div>
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- <div class="row justify-content-center mb-5"> -->
             <div class="col-md-12 px-5 text-center">
                 <h6 class="font-weight-bold">Change Image</h6>
                 <h6 class="text-muted">You can upload a JPG, PNG or GIF file (File size limit is 3MB).<br> Recommended size 200x200.</h6>
@@ -41,18 +31,12 @@
                 <label for="profileImage" class="btn btn-sm btn-primary m-1"><i class="fas fa-upload mr-1"></i>Choose Image</label>
                 <a class="btn btn-sm btn-outline-secondary m-1">Remove</a>
             </div>
-        <!-- </div> -->
-        
-        <!-- Containers -->
-        <!-- <div class="row"> -->
             <div class="col-md-10 mt-3 px-5">
                 {{form}}
                 <hr>
             </div>
-        <!-- </div> -->
             <div class="mb-3 d-flex justify-content-center col-12">
                 <button type="submit" class="btn btn-primary m-2">Save</button>
-                
                 <a href="{% url 'untangled:profile' %}" class="btn btn-danger float-right m-2">Cancel</a>
             </div>
         </form>
@@ -77,5 +61,4 @@
         }
     }
 </script>
-
 {% endblock %}
