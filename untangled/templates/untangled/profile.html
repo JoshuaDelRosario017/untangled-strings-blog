@@ -7,6 +7,7 @@
 
 
 {% block content %}
+{% for user_info in user_info %}
   <div class="header__wrapper">
     <div class="BannerCover">
         <div class="BannerTitleProfile">
@@ -14,32 +15,33 @@
         </div>
     </div>
     <div class="cols__container">
-      <div class="left__col">
+      <div class="left__col col">
         <div class="img__container">
-          {% if user.is_authenticated %}
+          {% if user_info.id == user.id %}
           <a href="#" data-toggle="modal" data-target="#ModalCenterChangeProfile">
               <img class="img-fluid rounded-circle my-4" src="/media/{{ user.profile.profile_pic }}"style="border: 3px solid #f09d37" onerror="this.src='/media/profile_pics/default_pfp.jpeg';this.onerror='';" alt="profile_picture">
               <div class="profile-text">
                 <h5>Change Profile</h5>
               </div>
-            {% if request.user.is_authenticated == True %}
+            {% if user_info.id %}
               <span></span>
             {% endif %}
           </a>
           {% else %}
             <img class="img-fluid rounded-circle my-4" src="/media/{{ user.profile.profile_pic }}"style="border: 3px solid #f09d37" onerror="this.src='/media/profile_pics/default_pfp.jpeg';this.onerror='';" alt="profile_picture">
-            <div class="profile-text">
+            <!-- <div class="profile-text">
               <h5>Change Profile</h5>
-            </div>
+            </div> -->
             {% if request.user.is_authenticated == True %}
               <span></span>
             {% endif %}
           {% endif %}
         </div>
 
-        <h2>{{ user.first_name.title }} {{ user.last_name.title }}</h2>
+
+        <h2>{{ user_info.first_name.title }} {{ user_info.last_name.title }}</h2>
         <!-- <p>UX/UI Designer</p> -->
-        <p class="mt-3">{{ user.email }}</p>
+        <p class="mt-3">{{ user_info.email }}</p>
         <ul class="about">
           <li><span>0</span>Followers</li>
           <li><span>0</span>Following</li>
@@ -48,8 +50,9 @@
 
         <div class="content">
           <p>
-            {% if user.profile.bio %}
-                {{user.profile.bio}} <a href="#"><i class="fa-regular fa-pen-to-square ml-2"></i></a>
+            {% if user_info.profile.bio %}
+                <p class="text-muted">{{user_info.profile.bio}}</p> 
+                <a href="#"><i class="fa-regular fa-pen-to-square ml-2"></i></a>
             {% else %}
                 <p class="text-muted">Create your bio.</p>
                 <a href="#" data-toggle="modal" data-target="#ModalCenterAddBio">
@@ -74,29 +77,36 @@
                 <!-- <button class="btn-sm">Follow</button>
                 <button class="btn-sm bg-secondary">Edit Profile</button> -->
                 <a href="#" class="btn-primary btn-sm">Follow</a>
-                <a href="{% url 'untangled:edit-profile' %}" class="btn btn-sm bg-secondary">Edit Profile / Account Info</a>
-
+                {% if user.is_authenticated %}
+                  {% if user_info.id == user.id %}
+                    <a href="{% url 'untangled:edit-profile' %}" class="btn btn-sm bg-secondary">Edit Profile / Account Info</a>
+                  {% endif %}
+                {% endif %}
             </div>
         </nav>
 
         <div class="entries">
             <h2>Published Works ({{blog_obj_count}})</h2>
-            {% for blog in blog_obj %}
-            <div class="card mb-3 rounded work-pages-cards">
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="{{ blog.blog_thumbnail }}" class="card-img-top" alt="{{ blog.blog_thumbnail }}">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="{% url 'untangled:blogEntry' blog.pk blog.blog_title|slugify %}" style="color: #000;">{{ blog.blog_title|truncatechars:30 }}</a></h5>
-                            <p class="card-text">{{ blog.blog_description|truncatechars:130 }}</p>
-                            <p class="card-text"><small class="text-muted">Published {{ blog.blog_pubdate|timesince }} ago</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+            {% if blog_obj %}
+              {% for blog in blog_obj %}
+              <div class="card mb-3 rounded work-pages-cards">
+                  <div class="row">
+                      <div class="col-md-4">
+                          <img src="{{ blog.blog_thumbnail }}" class="card-img-top" alt="{{ blog.blog_thumbnail }}">
+                      </div>
+                      <div class="col-md-8">
+                          <div class="card-body">
+                              <h5 class="card-title mt-2" style="font-family: 'Lobster', sans-serif;"><a href="{% url 'untangled:blogEntry' blog.pk blog.blog_title|slugify %}" style="color: #000;">{{ blog.blog_title|truncatechars:30 }}</a></h5>
+                              <p class="card-text">{{ blog.blog_description|truncatechars:130 }}</p>
+                              <p class="card-text"><small class="text-muted">Published {{ blog.blog_pubdate|timesince }} ago</small></p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              {% endfor %}
+            {% else %}
+              <h4 class="text-center alert alert-success mt-5">Author doesn't have any published blog yet.</h4>
+            {% endif %}
           <!-- <img src="img/img_1.avif" alt="Photo" />
           <img src="img/img_2.avif" alt="Photo" />
           <img src="img/img_3.avif" alt="Photo" />
@@ -112,7 +122,7 @@
 {% include 'untangled/modals.html' %}
 <!-- End Modal -->
 
-
+{% endfor %}
 <!-- scripts -->
 <script>
   function displayImage(e) {

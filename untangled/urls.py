@@ -26,7 +26,7 @@ urlpatterns = [
     path('addCategory/', views.addCategory, name='addCategory'),
     path('processAddCategory/', views.processAddCategory, name='processAddCategory'),
     path('<int:id>/deleteCategories/', views.deleteCategories, name='deleteCategories'),
-    path('profile/', views.profile, name='profile'),
+    path('@<str:username>/', views.profile, name='profile'),
     # path('editprofile/', views.edit, name='edit'),
     path('edit-profile/', UserEditView.as_view(), name='edit-profile'),
     path('add/saveasdraft/', views.processDraftPost, name='processDraftPost'),
@@ -41,7 +41,7 @@ urlpatterns = [
     
    
     #URLs for registration
-    path('profile/', ProfileView.as_view(), name='ProfileView'),
+    # path('profile/', ProfileView.as_view(), name='ProfileView'),
     # path('login-page/', LoginPage.as_view(), name='LoginPage'),
     path('register/', UserRegisterView.as_view(), name='register'),
     # path('change-password/', auth_views.PasswordChangeView.as_view(template_name='registration/change-password.html'), name='change-password'),

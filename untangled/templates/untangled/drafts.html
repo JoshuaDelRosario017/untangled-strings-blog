@@ -8,13 +8,11 @@
 {% load static %}
 
 <div class="container mb-4" style="background-color:  #fff; padding-top: 10px; background-color: var(--primary-color);">
-    
+    <h4 class="text-center">YOUR DRAFT BLOGS</h4>
     <div class="row" style="background-color: #fff; box-shadow: 0 4px 10px 0 rgba(22, 22, 26, 0.18);">
         <div class="col-md-12">
             <div class="row row-flex">
-                
                 <div class="col col-flex-item">
-                    <h2 class="text-center mt-3">YOUR DRAFT BLOGS</h2>
                     <hr>
                     <div class="row-md-9 col-flex-item">
                         {% if blog_obj %}
@@ -71,11 +69,10 @@
                         </table> -->
                         
                         {% else %}
-                            <h4 class="text-center mt-5">No Draft available. Try to <a href="{% url 'untangled:add' %}">Create</a> and publish a blog now.</h4>
+                            <h4 class="text-center mt-5 mb-5">No Draft available. Try to <a href="{% url 'untangled:add' %}">Create</a> and publish a blog now.</h4>
                         {% endif %}
                     </div>
                 </div>
-                {% include 'untangled/workpages.html' %}
             </div>
         </div>
     </div>

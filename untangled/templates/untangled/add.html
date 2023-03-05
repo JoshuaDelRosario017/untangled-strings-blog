@@ -41,7 +41,7 @@
                     <label class="col-md-12" for="category">Blog Category: </label>
                     <div class="col-md-12 tags mb-4">
                         
-                        <select class="form-select mb-3 col-md-8 category" id="categories" name="category" required>
+                        <select class="custom-select form-select mb-3 col-md-8 category" id="categories" name="category" required>
                             <option class="option" disabled selected>Select Category</option>
                             {% for cat in categories %} 
                                 <option class="option" style="height: 500px !important" value="{{ cat.blog_categories }}">{{ cat.blog_categories }}</option>

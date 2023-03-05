@@ -194,16 +194,20 @@ def deleteCategories(request, id):
     category = Category.objects.filter(id=id).delete()
     return redirect('/addCategory')
 
-@login_required(login_url='') 
-def profile(request):
+# @login_required(login_url='')
+def profile(request, username):
     user = request.user
-    blog_obj = Blogs.objects.filter(blog_user=user.id).filter(blog_pubdate__isnull=False).filter(deleted_on__isnull=True).order_by('blog_id')
-    blog_obj_count = len(Blogs.objects.filter(blog_user=user.id).filter(blog_pubdate__isnull=False).filter(deleted_on__isnull=True).order_by('blog_id'))
+    user_info = User.objects.filter(username=username)
+    for user_id in user_info:
+        user_id = user_id.id
+    
+    blog_obj = Blogs.objects.filter(blog_user_id=user_id).filter(blog_pubdate__isnull=False).filter(deleted_on__isnull=True).order_by('blog_id')
+    blog_obj_count = len(blog_obj)
     # tags = tags.objects.filter(blog_id_id=blog_obj.blog_id)
     paginator = Paginator(blog_obj, 5)
     page_number =  request.GET.get('page')
     blog_obj = paginator.get_page(page_number)
-    return render(request, 'untangled/profile.html', {'blog_obj': blog_obj, 'blog_obj_count': blog_obj_count})
+    return render(request, 'untangled/profile.html', {'blog_obj': blog_obj, 'blog_obj_count': blog_obj_count, 'user_info': user_info})
     # return render(request, 'untangled/profile.html')
 
 @login_required(login_url='/login')
@@ -295,35 +299,19 @@ class blogEntry(DetailView):
     model = Blogs
     template_name = 'untangled/blogEntry.html'
 
-    # def get_queryset(self):
-    #     pk = self.kwargs.get("pk")
-    #     field_name = self.kwargs.get("blog_tags")
-    #     queryset = self.model.objects.filter(blog_id=pk)
-    #     return queryset.getlist(field_name)
-
     def get_context_data(self, *args, **kwargs):
         context = super(blogEntry, self).get_context_data(*args, **kwargs)
         reaction = get_object_or_404(Blogs, pk=self.kwargs['pk'])
-        total_likes = reaction.total_likes()
-
-        # tags = get_object_or_404(Blogs, pk=self.kwargs['pk'])
-        # tag_list = tags.get_blog_tags()
-
-        
+        total_like = reaction.total_likes()
 
         liked = False
         if reaction.likes.filter(pk=self.request.user.id).exists():
             liked = True
 
-        # context['queryset'] = self.get_queryset()
         context['liked'] = liked
-        # context['tags'] = tag_list.value_list('blog_tags', flat=True)
         return context
-    
-    # def get_tags(self):
-    #     tags = blog_tags.objects.value_list('Blogs', flat=True)
 
-@login_required(login_url='')
+@login_required
 def like_post(request, pk, blog_title):
     post = get_object_or_404(Blogs, blog_id=request.POST.get('post_id'))
     liked = False

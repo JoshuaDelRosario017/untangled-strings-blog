@@ -9,14 +9,19 @@
 
 <div class="container">
     <div class="row" >
+        
         <div class="col-md-8 mb-3 px-4 rounded col-flex-item" style="background-color: #fff; box-shadow: 0 4px 10px 0 var(--primary-color)">
             <h1 class="blog-title mt-4 font-weight-bold text-center">{{ blogs.blog_title }}</h1>
             
-            <div class="text-muted mt-3 text-center">
-                <div class="mb-1">By: <a href="#">{{ blogs.blog_author.title }}</a> &#x2022 Posted on: {{ blogs.blog_pubdate.date }}</div>
+            <div class="text-muted mt-3 mb-3 text-center">
+                <div class="mb-1">By <a href="#" style="cursor:default;">{{ blogs.blog_author.title }}</a> &#x2022 Posted {{ blogs.blog_pubdate.date }}</div>
                 
             </div> 
             <div class="separator"></div>
+            <!-- <div style="background-size: cover;"> -->
+                <img src="{{ blogs.blog_thumbnail }}" alt="" class="img-fluid" style="height: 40vh; width: 100vw; object-fit: cover;">
+            <!-- </div> -->
+            
             <div class="blog-desc-body px-3 py-3 mb-3 rounded">
                 <div class="mb-4">
                     {{ blogs.blog_description }}
@@ -25,7 +30,7 @@
                     {{ blogs.blog_body|safe }}
                 </div>
             </div>
-            <hr>
+            <hr style="background-color: #d2d2d2;">
                 <div class="mb-3">
                     Category: <small class="bg-dark text-light p-1 rounded">{{ blogs.blog_category }}</small>
                 </div>
@@ -37,7 +42,7 @@
                         <img class="img-fluid rounded-circle " src="media{{ user.profile }}"style="width: 60px; height:60px;" onerror="this.src='/media/profile_pics/default_pfp.jpeg';this.onerror='';">
                     </div>
                     <div class="col-md-12 col-flex-item">
-                        <small>Written By <strong><a href="#">{{ blogs.blog_author.title }}</a></strong></small>
+                        <small>Written By <strong><a href="#" style="cursor:default;">{{ blogs.blog_author.title }}</a></strong></small>
                     </div>
                     <div class="col-md-12 col-flex-item">
                         <small>Posted on: {{ blogs.blog_pubdate.date }}</small>

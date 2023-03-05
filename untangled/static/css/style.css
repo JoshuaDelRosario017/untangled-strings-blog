@@ -575,7 +575,7 @@ input, textarea{
 }
 
 .separator {
-  height: 5px;
+  height: 2px;
   background-color: var(--primary-color);
   margin: 15px 0px;
 }
@@ -879,13 +879,15 @@ input, textarea{
   cursor: pointer;
 }
 
-
+/* Footer */
 footer {
-  background-color: var(--primary-color) !important;
+  background-color: #d2d2d2 !important;
 }
 
+/* Banner */
 .BannerCover {
   height: 40vh !important;
+  width: 100vw !important;
   background: url(/static/img/poster.png) no-repeat;
   background-size: cover;
   border: none;
@@ -904,9 +906,7 @@ footer {
 .BannerCover .BannerTitleProfile h1 {
   text-transform: uppercase;
 }
-/* .socials a {
-  font-size: 10em;
-} */
+
 
 /**************************
       PROFILE PAGE STYLE
@@ -1108,7 +1108,6 @@ a {
 /* header__wrapper home */
 
 
-
 /*======================================
   MEDIA QUERIES
 ========================================*/
@@ -1124,29 +1123,6 @@ a {
   }
   .blog-title {
     font-size: 30px;
-  }
-}
-
-@media(max-width:767px) {
-  .container {
-    margin-top: 100px;
-  }
-  .reaction {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-  }
-
-  .post-details {
-    margin-bottom: 75px !important;
-  }
-  .card-img-top {
-    display: none;
-  }
-
-  .landingpage {
-    margin: 10px 10px 50px 10px;
   }
 }
 
@@ -1188,6 +1164,26 @@ a {
     top: -50px;
   }
 
+  .container {
+    margin-top: 100px;
+  }
+  .reaction {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .post-details {
+    margin-bottom: 75px !important;
+  }
+  .card-img-top {
+    display: none;
+  }
+
+  .landingpage {
+    margin: 10px 10px 50px 10px;
+  }
   
   nav .collapse ul a:hover {
     background-color: lightgray;
@@ -1222,13 +1218,14 @@ a {
     width: 100vw;
     padding: 15px;
     margin-left: -9.4vw;
+    top: -35px;
   }
 
   .header__wrapper form .input-group {
     display: none;
   }
 
-  .header__wrapper div h2 {
+  .header__wrapper div .greetings {
     display: none;
   }
 }

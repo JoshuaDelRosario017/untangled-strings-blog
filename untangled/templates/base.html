@@ -45,12 +45,14 @@
     <div class="content">
     {% include 'partials/_navbar.html' %}
     
-      {% block content %} {% endblock %}
+      {% block content %} 
+      
+      {% endblock %}
     </div>
     
     
 
-    <a class="gotopbtn" id="" href="#"><i class="fas fa-chevron-up"></i></a>
+    <a class="gotopbtn" id="" href="#"><i class="fa-solid fa-angles-up"></i></a>
     <script>
       $(window).on('load',function(){
         $(".loader").fadeOut(1000);

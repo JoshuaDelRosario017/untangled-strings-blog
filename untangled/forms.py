@@ -30,6 +30,13 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
+    
+    def clean_username(self):
+        ADMIN_USERNAMES = ['admin', 'administrator', 'root', 'superuser', 'test', 'testuser']
+        username = self.cleaned_data['username']
+        if username.lower() in ADMIN_USERNAMES:
+            raise forms.ValidationError("This username is not allowed. Try another one.")
+        return username
 
 class EditForm(UserChangeForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control mb-3'}), label='Email Address')
