@@ -13,17 +13,6 @@
             <a href="{% url 'untangled:home' %}" class="nav-items navbar-brand home mr-4">Blogs</a>
             <a href="{% url 'untangled:contact' %}" class="nav-items navbar-brand about mr-4">Contact</a>
             <a href="{% url 'untangled:Author' %}" class="nav-items navbar-brand user mr-4">Authors</a>
-            <div class=”dropdown”>
-                <button class=”btn btn-secondary dropdown-toggle”
-                type=”button” id=”dropdownMenu1” data-toggle=”dropdown”
-                aria-haspopup=”true” aria-expanded=”false”>
-                Dropdown
-                </button>
-                <div class=”dropdown-menu” aria-labelledby=”dropdownMenu1”>
-                <a class=”dropdown-item” href=”#!”>Action</a>
-                <a class=”dropdown-item” href=”#!”>Another action</a>
-                </div>
-               </div>
             {% if user.is_authenticated %}
                 <a href="{% url 'untangled:booksSection'%}" class="nav-items navbar-brand user mr-4">Books</a>            
                 <a href="{% url 'untangled:add' %}" class="nav-items navbar-brand add mr-4">Create</a>
@@ -42,14 +31,14 @@
                         <i class="fa-solid fa-user"></i>
                     </a> 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{% url 'untangled:profile' user.username %}" class=" navbar-brand ml-4 logout"><i class="fa-solid fa-user mr-2"></i>Profile</a>
+                        <a href="{% url 'untangled:profile' user.username %}" class="btn navbar-brand ml-4 logout"><i class="fa-solid fa-user mr-2"></i>Profile</a>
                         {% if user.is_superuser or user.is_admin %}
-                            <a href="{% url 'untangledStringsAdmin:adminDashboard' %}" class=" navbar-brand ml-4 logout"><i class="fa-solid fa-gear mr-2"></i>Admin Dashboard</a>
-                            <a href="{% url 'untangled:change-password' %}" class=" navbar-brand ml-4 logout"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
+                            <a href="{% url 'untangledStringsAdmin:adminDashboard' %}" class="btn navbar-brand ml-4 logout"><i class="fa-solid fa-gear mr-2"></i>Admin Dashboard</a>
+                            <a href="{% url 'untangled:change-password' %}" class="btn navbar-brand ml-4 logout"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
                         {% else %}
-                            <a href="{% url 'untangled:change-password' %}" class=" navbar-brand ml-4 logout"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
+                            <a href="{% url 'untangled:change-password' %}" class="btn navbar-brand ml-4 logout"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
                         {% endif %}
-                        <a href="{% url 'untangled:processlogout' %}" class=" navbar-brand ml-4 logout"><i class="fa-solid fa-right-from-bracket mr-2"></i>Log out</a>
+                        <a href="{% url 'untangled:processlogout' %}" class="btn navbar-brand ml-4 logout"><i class="fa-solid fa-right-from-bracket mr-2"></i>Log out</a>
                     </div>
                 </div>
                 {% else %}            

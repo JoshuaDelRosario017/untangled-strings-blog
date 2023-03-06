@@ -77,6 +77,9 @@ def home(request):
     featured = Blogs.objects.filter(is_featured=True)
     entries = Blogs.objects.filter(is_featured=False)
     entries_count = len(entries)
+    paginator = Paginator(entries, 5)
+    page_number =  request.GET.get('page')
+    entries = paginator.get_page(page_number)
     return render(request, 'untangled/home.html', {'featured': featured, 'entries': entries, 'entries_count': entries_count})
 
 # @login_required(login_url='untangled/loginview')

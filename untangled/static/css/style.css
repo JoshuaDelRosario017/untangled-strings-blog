@@ -585,6 +585,12 @@ input, textarea{
   font-family: 'Roboto', sans;
 }
 
+.blog-desc-body .blog_body img{
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 /*======================================
   REACTION
 ========================================*/
@@ -716,6 +722,7 @@ input, textarea{
 
 .auto-type {
  color: var(--primary-color);
+ font-family: 'Lobster', sans-serif;
 }
 /* .wrapper1 {
   display: inline-flex !important;
@@ -1184,7 +1191,16 @@ a {
   .landingpage {
     margin: 10px 10px 50px 10px;
   }
+
+  .landingpage-top .typedTextIntro, .getstarted {
+    margin-left: 10px !important;
+  }
   
+  .landingpage-top .getstarted {
+    display: flex;
+    justify-content: center;
+  }
+
   nav .collapse ul a:hover {
     background-color: lightgray;
   }

@@ -37,7 +37,7 @@
             </div>
             <div class="mb-3 d-flex justify-content-center col-12">
                 <button type="submit" class="btn btn-primary m-2">Save</button>
-                <a href="{% url 'untangled:profile' %}" class="btn btn-danger float-right m-2">Cancel</a>
+                <a href="{% url 'untangled:profile' user.username %}" class="btn btn-danger float-right m-2">Cancel</a>
             </div>
         </form>
     </div>

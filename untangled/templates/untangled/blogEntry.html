@@ -17,16 +17,16 @@
                 <div class="mb-1">By <a href="#" style="cursor:default;">{{ blogs.blog_author.title }}</a> &#x2022 Posted {{ blogs.blog_pubdate.date }}</div>
                 
             </div> 
-            <div class="separator"></div>
+            
             <!-- <div style="background-size: cover;"> -->
                 <img src="{{ blogs.blog_thumbnail }}" alt="" class="img-fluid" style="height: 40vh; width: 100vw; object-fit: cover;">
             <!-- </div> -->
-            
+            <div class="separator"></div>
             <div class="blog-desc-body px-3 py-3 mb-3 rounded">
                 <div class="mb-4">
                     {{ blogs.blog_description }}
                 </div>
-                <div>
+                <div class="blog_body">
                     {{ blogs.blog_body|safe }}
                 </div>
             </div>

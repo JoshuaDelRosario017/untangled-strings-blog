@@ -86,16 +86,17 @@
         </nav>
 
         <div class="entries">
-            <h2>Published Works ({{blog_obj_count}})</h2>
+            <h2>Published Blogs ({{blog_obj_count}})</h2>
             {% if blog_obj %}
               {% for blog in blog_obj %}
               <div class="card mb-3 rounded work-pages-cards">
                   <div class="row">
                       <div class="col-md-4">
-                          <img src="{{ blog.blog_thumbnail }}" class="card-img-top" alt="{{ blog.blog_thumbnail }}">
+                          <img src="{{ blog.blog_thumbnail }}" class="card-img-top" alt="{{ blog.blog_thumbnail }}" style="max-width: 100%; object-fit: cover;">
                       </div>
                       <div class="col-md-8">
                           <div class="card-body">
+                            <strong class="d-inline-block text-light rounded" style="background-color: lightcoral; padding: 3px; font-size: 10px;">{{ blog.blog_category }}</strong>
                               <h5 class="card-title mt-2" style="font-family: 'Lobster', sans-serif;"><a href="{% url 'untangled:blogEntry' blog.pk blog.blog_title|slugify %}" style="color: #000;">{{ blog.blog_title|truncatechars:30 }}</a></h5>
                               <p class="card-text">{{ blog.blog_description|truncatechars:130 }}</p>
                               <p class="card-text"><small class="text-muted">Published {{ blog.blog_pubdate|timesince }} ago</small></p>
@@ -104,6 +105,17 @@
                   </div>
               </div>
               {% endfor %}
+              <ul class="pagination d-flex justify-content-center align-items-center" aria-colcount="">
+                {% if blog_obj.has_previous %}
+                    <li class="page-item m-2"><a class="page-link" href="?page=1">&laquo; First</a></li>
+                    <li class="page-item m-2"><a class="page-link" href="?page={{ blog_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+
+                {% if blog_obj.has_next %}
+                    <li class="page-item m-2"><a class="page-link" href="?page={{ blog_obj.next_page_number }}">Next</a></li>
+                    <li class="page-item m-2"><a class="page-link" href="?page={{ blog_obj.paginator.num_pages }}">Last &raquo;</a></li>
+                {% endif %}
+            </ul>
             {% else %}
               <h4 class="text-center alert alert-success mt-5">Author doesn't have any published blog yet.</h4>
             {% endif %}
